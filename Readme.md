@@ -1,7 +1,7 @@
 # Личный проект «Что посмотреть»
 
 * Студент: [Inna Tsyganenko](https://up.htmlacademy.ru/react/7/user/1452537).
-* Наставник: `Неизвестно`.
+* Наставник: [Дмитрий Гуляев](https://htmlacademy.ru/profile/dima).
 
 ---
 
