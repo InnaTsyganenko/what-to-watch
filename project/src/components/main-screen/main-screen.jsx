@@ -1,9 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import Logo from '../logo/logo';
 import MoviesList from '../movies-list/movies-list';
 
-import PropTypes from 'prop-types';
-
-function Main(props) {
+function MainScreen(props) {
   const {moviesNames, movieTitle, movieGenre, movieReleaseDate} = props;
 
   return (<React.Fragment>
@@ -11,18 +11,11 @@ function Main(props) {
       <div className="film-card__bg">
         <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
       </div>
-
       <h1 className="visually-hidden">WTW</h1>
-
       <header className="page-header film-card__head">
         <div className="logo">
-          <a className="logo__link" href="/#">
-            <span className="logo__letter logo__letter--1">W</span>
-            <span className="logo__letter logo__letter--2">T</span>
-            <span className="logo__letter logo__letter--3">W</span>
-          </a>
+          <Logo />
         </div>
-
         <ul className="user-block">
           <li className="user-block__item">
             <div className="user-block__avatar">
@@ -34,20 +27,17 @@ function Main(props) {
           </li>
         </ul>
       </header>
-
       <div className="film-card__wrap">
         <div className="film-card__info">
           <div className="film-card__poster">
             <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
           </div>
-
           <div className="film-card__desc">
             <h2 className="film-card__title">{movieTitle}</h2>
             <p className="film-card__meta">
               <span className="film-card__genre">{movieGenre}</span>
               <span className="film-card__year">{movieReleaseDate}</span>
             </p>
-
             <div className="film-card__buttons">
               <button className="btn btn--play film-card__button" type="button">
                 <svg viewBox="0 0 19 19" width="19" height="19">
@@ -123,11 +113,11 @@ function Main(props) {
     </div></React.Fragment>
   );}
 
-Main.propTypes = {
+MainScreen.propTypes = {
   moviesNames: PropTypes.string.isRequired,
   movieTitle: PropTypes.string.isRequired,
   movieGenre: PropTypes.string.isRequired,
   movieReleaseDate: PropTypes.string.isRequired,
 };
 
-export default Main;
+export default MainScreen;
