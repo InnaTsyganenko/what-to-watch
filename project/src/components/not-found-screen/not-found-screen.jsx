@@ -1,5 +1,7 @@
 import React from 'react';
 import Logo from '../logo/logo';
+import {logoClassName} from '../../const';
+import Copyright from '../copyright/copyright';
 
 function NotFoundScreen() {
   return (
@@ -10,8 +12,8 @@ function NotFoundScreen() {
         </div>
         <h1 className="visually-hidden">WTW</h1>
         <header className="page-header">
-          <div className="logo">
-            <Logo />
+          <div className="page-footer">
+            <Logo logoClassName={logoClassName.HEADER_LOGO} />
             <p>Oooops!</p>
             <h2>404. The page does not exist.</h2>
             <h3>Go to <a href="/" style={{color: 'inherit'}}> main page</a>?</h3>
@@ -20,16 +22,8 @@ function NotFoundScreen() {
       </section>
       <div className="page-content" style={{flexGrow: '0', flexShrink: '0', flexBasis: 'auto'}}>
         <footer className="page-footer">
-          <div className="logo">
-            <a className="logo__link logo__link--light">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-          <div className="copyright">
-            <p>© 2019 What to watch Ltd.</p>
-          </div>
+          <Logo logoClassName={logoClassName.FOOTER_LOGO} />
+          <Copyright />
         </footer>
       </div>
     </div>

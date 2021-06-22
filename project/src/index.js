@@ -1,40 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
-
-const moviesNames = [
-  'Fantastic Beasts: The Crimes of Grindelwald',
-  'Bohemian Rhapsody',
-  'Macbeth',
-  'Aviator',
-  'We need to talk about Kevin',
-  'What We Do in the Shadows',
-  'Revenant',
-  'Johnny English',
-  'Shutter Island',
-  'Pulp Fiction',
-  'No Country for Old Men',
-  'Snatch',
-  'Moonrise Kingdom',
-  'Seven Years in Tibet',
-  'Midnight Special',
-  'War of the Worlds',
-  'Dardjeeling Limited',
-  'Orlando',
-  'Mindhunter',
-  'Midnight Special',
-];
-
-const movieTitle = ['The Grand Budapest Hotel'];
-const movieGenre = ['Drama'];
-const movieReleaseDate = ['2014'];
+import promoFilm from './mocks/promo-film.js';
+import films from './mocks/films.js';
+import reviews from './mocks/reviews.js';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App moviesNames={moviesNames}
-      movieTitle={movieTitle}
-      movieGenre={movieGenre}
-      movieReleaseDate={movieReleaseDate}
+    <App
+      promoFilm={promoFilm}
+      films={films}
+      reviews={reviews}
     />
   </React.StrictMode>,
   document.getElementById('root'),

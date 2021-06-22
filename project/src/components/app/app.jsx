@@ -5,38 +5,49 @@ import {AppRoute} from '../../const';
 import MainScreen from '../main-screen/main-screen';
 import LoginScreen from '../login-screen/login-screen';
 import MyListScreen from '../my-list-screen/my-list-screen';
-import FilmScreen from '../films-screen/films-screen';
+import FilmScreen from '../film-screen/film-screen';
 import AddReviewScreen from '../add-review-screen/add-review-screen';
 import PlayerScreen from '../player-screen/player-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
+import filmsProp from '../film-screen/films.prop';
+import reviewsProp from '../film-screen/reviews.prop';
 
 function App(props) {
-  const {moviesNames, movieTitle, movieGenre, movieReleaseDate} = props;
+  const {promoFilm, films, reviews} = props;
 
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.ROOT}>
-          <MainScreen moviesNames={moviesNames}
-            movieTitle={movieTitle}
-            movieGenre={movieGenre}
-            movieReleaseDate={movieReleaseDate}
+          <MainScreen
+            promoFilm={promoFilm}
+            films={films}
           />
         </Route>
         <Route exact path={AppRoute.LOGIN}>
           <LoginScreen />
         </Route>
         <Route exact path={AppRoute.MY_LIST}>
-          <MyListScreen />
+          <MyListScreen
+            films={films}
+          />
         </Route>
         <Route exact path={AppRoute.FILM}>
-          <FilmScreen />
+          <FilmScreen
+            promoFilm={promoFilm}
+            reviews={reviews}
+          />
         </Route>
         <Route exact path={AppRoute.ADD_REVIEW}>
-          <AddReviewScreen />
+          <AddReviewScreen
+            reviews={reviews}
+          />
         </Route>
         <Route exact path={AppRoute.PLAYER}>
-          <PlayerScreen />
+          <PlayerScreen
+            promoFilm={promoFilm}
+            films={films}
+          />
         </Route>
         <Route>
           <NotFoundScreen />
@@ -47,10 +58,9 @@ function App(props) {
 }
 
 App.propTypes = {
-  moviesNames: PropTypes.string.isRequired,
-  movieTitle: PropTypes.string.isRequired,
-  movieGenre: PropTypes.string.isRequired,
-  movieReleaseDate: PropTypes.string.isRequired,
+  promoFilm: PropTypes.object.isRequired,
+  films: PropTypes.arrayOf(filmsProp).isRequired,
+  reviews: PropTypes.arrayOf(PropTypes.shape(reviewsProp)).isRequired,
 };
 
 export default App;
