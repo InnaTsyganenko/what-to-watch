@@ -12,8 +12,10 @@ export const logoClassName = {
   FOOTER_LOGO: 'logo__link logo__link--light',
 };
 
-export const filmState = {
-  OVERVIEW: 'OVERVIEW',
-  DETAILS: 'DETAILS',
-  REVIEWS: 'REVIEWS',
+export const filmStates = {
+  OVERVIEW: 'Overview',
+  DETAILS: 'Details',
+  REVIEWS: 'Reviews',
 };
+
+export const RATINGS = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];

@@ -1,22 +1,17 @@
 import {React, useState} from 'react';
-import {Link} from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Logo from '../logo/logo';
 import UserBlock from '../user-block/user-block';
 import FIlmCardButtons from '../film-card-buttons/film-card-buttons';
-import {logoClassName, filmState} from '../../const';
-import Copyright from '../copyright/copyright';
+import {logoClassName, filmStates} from '../../const';
+import FilmCardNav from '../film-card-nav/film-card-nav';
 import FilmPageOverview from '../film-page-overview/film-page-overview';
 import FilmPageDetails from '../film-page-details/film-page-details';
 import FilmPageReviews from '../film-page-reviews/film-page-reviews';
-import PropTypes from 'prop-types';
-
+import Copyright from '../copyright/copyright';
 function FilmScreen(props) {
   const {promoFilm} = props;
-  const [state, setState] = useState({ state: filmState.OVERVIEW, activeItem: {} });
-
-  function toggleActiveItem(activeState) {
-    setState({ activeItem: { [activeState]: true } });
-  }
+  const [state, setState] = useState({ activeItem: { [filmStates.OVERVIEW]: true } });
 
   return (
     <div>
@@ -47,37 +42,10 @@ function FilmScreen(props) {
               <img src={promoFilm.posterImage} alt={promoFilm.name} width={218} height={327} />
             </div>
             <div className="film-card__desc">
-              <nav className="film-nav film-card__nav">
-                <ul className="film-nav__list">
-                  <li onClick={() => toggleActiveItem(filmState.OVERVIEW)}
-                    className={(state.state === 'OVERVIEW' || state.activeItem[filmState.OVERVIEW]) ? 'film-nav__item film-nav__item--active' : 'film-nav__item'}
-                  >
-                    <Link to="/films/:id" className="film-nav__link"
-                      onClick={() => {}}
-                    >Overview
-                    </Link>
-                  </li>
-                  <li onClick={() => toggleActiveItem(filmState.DETAILS)}
-                    className={(state.activeItem[filmState.DETAILS]) ? 'film-nav__item film-nav__item--active' : 'film-nav__item'}
-                  >
-                    <Link to="#" className="film-nav__link"
-                      onClick={() => {}}
-                    >Details
-                    </Link>
-                  </li>
-                  <li onClick={() => toggleActiveItem(filmState.REVIEWS)}
-                    className={(state.activeItem[filmState.REVIEWS]) ? 'film-nav__item film-nav__item--active' : 'film-nav__item'}
-                  >
-                    <Link to="#" className="film-nav__link"
-                      onClick={() => {}}
-                    >Reviews
-                    </Link>
-                  </li>
-                </ul>
-              </nav>
-              {(state.state === 'OVERVIEW' || state.activeItem[filmState.OVERVIEW]) ? <FilmPageOverview /> : null}
-              {(state.activeItem[filmState.DETAILS]) ? <FilmPageDetails /> : null}
-              {(state.activeItem[filmState.REVIEWS]) ? <FilmPageReviews /> : null}
+              <FilmCardNav state={state} setState={setState} />
+              {(state.state === 'Overview' || state.activeItem[filmStates.OVERVIEW]) && <FilmPageOverview />}
+              {(state.activeItem[filmStates.DETAILS]) && <FilmPageDetails />}
+              {(state.activeItem[filmStates.REVIEWS]) && <FilmPageReviews />}
             </div>
           </div>
         </div>
