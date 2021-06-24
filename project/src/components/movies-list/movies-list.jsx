@@ -7,6 +7,7 @@ function MoviesList(props) {
   const {films} = props;
   const [activeFilm, setActiveFilm] = useState(false);
   const history = useHistory();
+  const onFilmClick = () => history.push(AppRoute.FILM);
 
   return (
     <div className="catalog__films-list">
@@ -19,7 +20,7 @@ function MoviesList(props) {
                 id: film.id,
               });
             }}
-            onClick={() => history.push(AppRoute.FILM)}
+            onClick={onFilmClick}
           >
             <div className="small-film-card__image">
               <img src={film.previewImage} alt={film.name} width="280" height="175" />

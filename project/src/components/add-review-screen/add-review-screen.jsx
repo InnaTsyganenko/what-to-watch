@@ -17,20 +17,6 @@ function AddReviewScreen(props) {
     dateReview: reviews[0].date,
   });
 
-  function handleInputChange(event) {
-    const target = event.target;
-    const value = target.type === 'radio' ? target.defaultValue : target.value;
-    const name = target.name;
-
-    setState({
-      filmId: reviews[0].id,
-      userId: reviews[0].user.id,
-      userName: reviews[0].user.name,
-      [name]: value,
-      dateReview: reviews[0].date,
-    });
-  }
-
   return (
     <section className="film-card film-card--full">
       <div className="film-card__header">
@@ -59,11 +45,11 @@ function AddReviewScreen(props) {
       <div className="add-review">
         <form action="#" className="add-review__form">
           <div className="rating">
-            <Rating  state={state} setState={setState} handleInputChange={handleInputChange}/>
+            <Rating  state={state} setState={setState}/>
           </div>
           <div className="add-review__text">
             <textarea className="add-review__textarea" name="reviewText" id="review-text" placeholder="Review text" defaultValue={''}
-              onChange={(event) => handleInputChange(event)}
+              onChange={(event) => setState({...state, reviewText: event.target.value})}
             />
             <div className="add-review__submit">
               <button className="add-review__btn" type="submit">Post</button>

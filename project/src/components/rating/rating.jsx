@@ -3,7 +3,7 @@ import {RATINGS} from '../../const';
 import PropTypes from 'prop-types';
 
 function Rating(props) {
-  const {state, handleInputChange} = props;
+  const {state, setState} = props;
   const nameId = 'star-';
 
   return (
@@ -12,7 +12,7 @@ function Rating(props) {
         <React.Fragment key={rating}>
           <input className="rating__input" id={nameId + rating} type="radio" name="rating" defaultValue={rating}
             defaultChecked={state.rating}
-            onClick={(event) => handleInputChange(event)}
+            onClick={(event) => setState({...state, rating: event.target.defaultValue})}
           />
           <label className="rating__label" htmlFor={nameId + rating}>Rating {rating}</label>
         </React.Fragment>))}
@@ -22,7 +22,7 @@ function Rating(props) {
 
 Rating.propTypes = {
   state: PropTypes.any,
-  handleInputChange: PropTypes.any,
+  setState: PropTypes.any,
 };
 
 export default Rating;

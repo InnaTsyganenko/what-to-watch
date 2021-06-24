@@ -6,11 +6,13 @@ import PropTypes from 'prop-types';
 function FIlmCardButtons(props) {
   const {location} = props;
   const history = useHistory();
+  const onPlayClick = () => history.push(AppRoute.PLAYER);
+  const onMyListClick = () => history.push(AppRoute.MY_LIST);
 
   return (
     <div className="film-card__buttons">
       <button className="btn btn--play film-card__button" type="button"
-        onClick={() => history.push(AppRoute.PLAYER)}
+        onClick={onPlayClick}
       >
         <svg viewBox="0 0 19 19" width="19" height="19">
           <use xlinkHref="#play-s"></use>
@@ -18,7 +20,7 @@ function FIlmCardButtons(props) {
         <span>Play</span>
       </button>
       <button className="btn btn--list film-card__button" type="button"
-        onClick={() => history.push(AppRoute.MY_LIST)}
+        onClick={onMyListClick}
       >
         <svg viewBox="0 0 19 20" width="19" height="20">
           <use xlinkHref="#add"></use>
