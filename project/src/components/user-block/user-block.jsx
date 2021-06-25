@@ -5,13 +5,13 @@ import {Link} from 'react-router-dom';
 
 function UserBlock() {
   const history = useHistory();
-  const onAvatarClick = () => history.push(AppRoute.MY_LIST);
+  const handleAvatarClick = () => history.push(AppRoute.MY_LIST);
 
   return (
     <ul className="user-block">
       <li className="user-block__item">
         <div className="user-block__avatar"
-          onClick={onAvatarClick}
+          onClick={handleAvatarClick}
         >
           <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
         </div>

@@ -6,7 +6,7 @@ import {AppRoute} from '../../const';
 function PlayerScreen(props) {
   const {promoFilm} = props;
   const history = useHistory();
-  const onExitClick = () => history.push(AppRoute.ROOT);
+  const handleExitButtonClick = () => history.push(AppRoute.ROOT);
 
   const timestamp = promoFilm.runTime;
   const hours = Math.floor(timestamp / 60 / 60);
@@ -27,7 +27,7 @@ function PlayerScreen(props) {
     <div className="player">
       <video src="#" className="player__video" poster={promoFilm.backgroundImage} />
       <button type="button" className="player__exit"
-        onClick={onExitClick}
+        onClick={handleExitButtonClick}
       >Exit
       </button>
       <div className="player__controls">

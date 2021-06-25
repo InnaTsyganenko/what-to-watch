@@ -11,7 +11,11 @@ import FilmPageReviews from '../film-page-reviews/film-page-reviews';
 import Copyright from '../copyright/copyright';
 function FilmScreen(props) {
   const {promoFilm} = props;
-  const [state, setState] = useState({ activeItem: { [filmStates.OVERVIEW]: true } });
+  const [state, setState] = useState({
+    activeItem: {
+      [filmStates.OVERVIEW]: true,
+    },
+  });
 
   return (
     <div>
