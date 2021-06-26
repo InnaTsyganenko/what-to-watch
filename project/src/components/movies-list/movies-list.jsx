@@ -1,20 +1,32 @@
-import React from 'react';
-
+import React, {useState} from 'react';
+import {useHistory} from 'react-router-dom';
+import {AppRoute} from '../../const';
 import PropTypes from 'prop-types';
 
 function MoviesList(props) {
-  const {moviesNames} = props;
+  const {films} = props;
+  const [activeFilm, setActiveFilm] = useState(false);
+  const history = useHistory();
+  const handleFilmCardClick = () => history.push(AppRoute.FILM);
 
   return (
     <div className="catalog__films-list">
-      {moviesNames.map((movie, i) => (
-        <React.Fragment key={i.toString()}>
-          <article className="small-film-card catalog__films-card">
+      {films.map((film) => (
+        <React.Fragment key={film.id}>
+          <article className="small-film-card catalog__films-card"
+            onMouseOver={() => {
+              setActiveFilm({
+                ...activeFilm,
+                id: film.id,
+              });
+            }}
+            onClick={handleFilmCardClick}
+          >
             <div className="small-film-card__image">
-              <img src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg" alt={movie} width="280" height="175" />
+              <img src={film.previewImage} alt={film.name} width="280" height="175" />
             </div>
             <h3 className="small-film-card__title">
-              <a className="small-film-card__link" href="film-page.html">{movie}</a>
+              <a className="small-film-card__link" href="film-page.html">{film.name}</a>
             </h3>
           </article>
         </React.Fragment>))}
@@ -23,7 +35,7 @@ function MoviesList(props) {
 }
 
 MoviesList.propTypes = {
-  moviesNames: PropTypes.string.isRequired,
+  films: PropTypes.array.isRequired,
 };
 
 export default MoviesList;
