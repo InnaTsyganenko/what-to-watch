@@ -17,6 +17,13 @@ function AddReviewScreen(props) {
     dateReview: reviews[0].date,
   });
 
+  function handleTextareaChange(event) {
+    setState({
+      ...state,
+      reviewText: event.target.value,
+    });
+  }
+
   return (
     <section className="film-card film-card--full">
       <div className="film-card__header">
@@ -49,7 +56,7 @@ function AddReviewScreen(props) {
           </div>
           <div className="add-review__text">
             <textarea className="add-review__textarea" name="reviewText" id="review-text" placeholder="Review text" defaultValue={''}
-              onChange={(event) => setState({...state, reviewText: event.target.value})}
+              onChange={(event) => handleTextareaChange(event)}
             />
             <div className="add-review__submit">
               <button className="add-review__btn" type="submit">Post</button>
