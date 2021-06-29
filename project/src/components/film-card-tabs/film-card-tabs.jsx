@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import {filmStates} from '../../const';
 import PropTypes from 'prop-types';
 
-function FilmCardNav(props) {
+function FilmCardTabs(props) {
   const {state, setState} = props;
 
   function toggleActiveItem(activeState) {
@@ -32,9 +32,9 @@ function FilmCardNav(props) {
   );
 }
 
-FilmCardNav.propTypes = {
+FilmCardTabs.propTypes = {
   state: PropTypes.any,
   setState: PropTypes.any,
 };
 
-export default FilmCardNav;
+export default FilmCardTabs;

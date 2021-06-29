@@ -4,13 +4,14 @@ import Logo from '../logo/logo';
 import UserBlock from '../user-block/user-block';
 import FIlmCardButtons from '../film-card-buttons/film-card-buttons';
 import {logoClassName, filmStates} from '../../const';
-import FilmCardNav from '../film-card-nav/film-card-nav';
+import FilmCardTabs from '../film-card-tabs/film-card-tabs';
 import FilmPageOverview from '../film-page-overview/film-page-overview';
 import FilmPageDetails from '../film-page-details/film-page-details';
 import FilmPageReviews from '../film-page-reviews/film-page-reviews';
+import CatalogLikeThis from '../catalog-like-this/catalog-like-this';
 import Copyright from '../copyright/copyright';
 function FilmScreen(props) {
-  const {promoFilm} = props;
+  const {promoFilm, films, reviews} = props;
   const [state, setState] = useState({
     activeItem: {
       [filmStates.OVERVIEW]: true,
@@ -46,52 +47,16 @@ function FilmScreen(props) {
               <img src={promoFilm.posterImage} alt={promoFilm.name} width={218} height={327} />
             </div>
             <div className="film-card__desc">
-              <FilmCardNav state={state} setState={setState} />
+              <FilmCardTabs state={state} setState={setState} />
               {(state.state === 'Overview' || state.activeItem[filmStates.OVERVIEW]) && <FilmPageOverview />}
               {(state.activeItem[filmStates.DETAILS]) && <FilmPageDetails />}
-              {(state.activeItem[filmStates.REVIEWS]) && <FilmPageReviews />}
+              {(state.activeItem[filmStates.REVIEWS]) && <FilmPageReviews reviews={reviews} />}
             </div>
           </div>
         </div>
       </section>
       <div className="page-content">
-        <section className="catalog catalog--like-this">
-          <h2 className="catalog__title">More like this</h2>
-          <div className="catalog__films-list">
-            <article className="small-film-card catalog__films-card">
-              <div className="small-film-card__image">
-                <img src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg" alt="Fantastic Beasts: The Crimes of Grindelwald" width={280} height={175} />
-              </div>
-              <h3 className="small-film-card__title">
-                <a className="small-film-card__link" href="film-page.html">Fantastic Beasts: The Crimes of Grindelwald</a>
-              </h3>
-            </article>
-            <article className="small-film-card catalog__films-card">
-              <div className="small-film-card__image">
-                <img src="img/bohemian-rhapsody.jpg" alt="Bohemian Rhapsody" width={280} height={175} />
-              </div>
-              <h3 className="small-film-card__title">
-                <a className="small-film-card__link" href="film-page.html">Bohemian Rhapsody</a>
-              </h3>
-            </article>
-            <article className="small-film-card catalog__films-card">
-              <div className="small-film-card__image">
-                <img src="img/macbeth.jpg" alt="Macbeth" width={280} height={175} />
-              </div>
-              <h3 className="small-film-card__title">
-                <a className="small-film-card__link" href="film-page.html">Macbeth</a>
-              </h3>
-            </article>
-            <article className="small-film-card catalog__films-card">
-              <div className="small-film-card__image">
-                <img src="img/aviator.jpg" alt="Aviator" width={280} height={175} />
-              </div>
-              <h3 className="small-film-card__title">
-                <a className="small-film-card__link" href="film-page.html">Aviator</a>
-              </h3>
-            </article>
-          </div>
-        </section>
+        <CatalogLikeThis films={films} currentGenre={promoFilm.genre} />
         <footer className="page-footer">
           <Logo logoClassName={logoClassName.FOOTER_LOGO} />
           <Copyright />
@@ -103,6 +68,8 @@ function FilmScreen(props) {
 
 FilmScreen.propTypes = {
   promoFilm: PropTypes.object.isRequired,
+  films: PropTypes.array.isRequired,
+  reviews: PropTypes.array.isRequired,
 };
 
 export default FilmScreen;
