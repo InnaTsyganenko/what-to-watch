@@ -7,12 +7,12 @@ function PreviewPlayer({film, autoPlay, src}) {
 
   const videoRef = useRef();
 
-  const handleMouseOver = function() {
-    setIsPlaying(true);
+  const handleLoadedData = function() {
+    setIsLoading(isLoading);
   };
 
-  const handleMouseOut = function() {
-    setIsPlaying(false);
+  const handleMouseActions = function(action) {
+    setIsPlaying(action);
   };
 
   useEffect(() => {
@@ -22,7 +22,7 @@ function PreviewPlayer({film, autoPlay, src}) {
       }, 1000);
       return () => clearTimeout(timer);
     }
-    videoRef.current.pause();
+
     videoRef.current.load();
     videoRef.current.pause();
     videoRef.current.currentTime = 0;
@@ -30,12 +30,12 @@ function PreviewPlayer({film, autoPlay, src}) {
 
   return (
     <div className="small-film-card__image"
-      onMouseOver={handleMouseOver}
-      onMouseOut={handleMouseOut}
+      onMouseOver={() => handleMouseActions(true)}
+      onMouseOut={() => handleMouseActions(false)}
     >
       <video src={src} ref={videoRef} className="player__video"
         poster={film.previewImage}
-        onLoadedData={() => setIsLoading(isLoading)}
+        onLoadedData={handleLoadedData}
         autoPlay
         muted
       />
