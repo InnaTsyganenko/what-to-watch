@@ -7,7 +7,11 @@ function FilmCardNav(props) {
   const {state, setState} = props;
 
   function toggleActiveItem(activeState) {
-    setState({ activeItem: { [activeState]: true } });
+    setState({
+      activeItem: {
+        [activeState]: true,
+      },
+    });
   }
 
   return (

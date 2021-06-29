@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {useHistory} from 'react-router-dom';
 import {AppRoute} from '../../const';
 import PropTypes from 'prop-types';
+import PreviewPlayer from '../preview-player/preview-player';
 
 function MoviesList(props) {
   const {films} = props;
-  const [activeFilm, setActiveFilm] = useState(false);
   const history = useHistory();
   const handleFilmCardClick = () => history.push(AppRoute.FILM);
 
@@ -14,17 +14,13 @@ function MoviesList(props) {
       {films.map((film) => (
         <React.Fragment key={film.id}>
           <article className="small-film-card catalog__films-card"
-            onMouseOver={() => {
-              setActiveFilm({
-                ...activeFilm,
-                id: film.id,
-              });
-            }}
             onClick={handleFilmCardClick}
           >
-            <div className="small-film-card__image">
-              <img src={film.previewImage} alt={film.name} width="280" height="175" />
-            </div>
+            <PreviewPlayer
+              film={film}
+              autoPlay={false}
+              src={film.previewVideoLink}
+            />
             <h3 className="small-film-card__title">
               <a className="small-film-card__link" href="film-page.html">{film.name}</a>
             </h3>
