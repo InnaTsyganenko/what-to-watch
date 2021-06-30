@@ -35,6 +35,7 @@ function App(props) {
         <Route exact path={AppRoute.FILM}>
           <FilmScreen
             promoFilm={promoFilm}
+            films={films}
             reviews={reviews}
           />
         </Route>
