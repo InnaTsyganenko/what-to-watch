@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react';
 import PropTypes from 'prop-types';
 
-function PreviewPlayer({film, autoPlay, src}) {
+function PreviewPlayer({movie, autoPlay, src}) {
   const [isLoading, setIsLoading] = useState(true);
   const [isPlaying, setIsPlaying] = useState(autoPlay);
 
@@ -11,8 +11,12 @@ function PreviewPlayer({film, autoPlay, src}) {
     setIsLoading(isLoading);
   };
 
-  const handleMouseActions = function(action) {
-    setIsPlaying(action);
+  const handleMouseOver = function() {
+    setIsPlaying(true);
+  };
+
+  const handleMouseOut = function() {
+    setIsPlaying(false);
   };
 
   useEffect(() => {
@@ -30,11 +34,11 @@ function PreviewPlayer({film, autoPlay, src}) {
 
   return (
     <div className="small-film-card__image"
-      onMouseOver={() => handleMouseActions(true)}
-      onMouseOut={() => handleMouseActions(false)}
+      onMouseOver={handleMouseOver}
+      onMouseOut={handleMouseOut}
     >
       <video src={src} ref={videoRef} className="player__video"
-        poster={film.previewImage}
+        poster={movie.previewImage}
         onLoadedData={handleLoadedData}
         autoPlay
         muted
@@ -46,7 +50,7 @@ function PreviewPlayer({film, autoPlay, src}) {
 PreviewPlayer.propTypes = {
   autoPlay: PropTypes.bool.isRequired,
   src: PropTypes.string.isRequired,
-  film: PropTypes.object.isRequired,
+  movie: PropTypes.object.isRequired,
 };
 
 export default PreviewPlayer;

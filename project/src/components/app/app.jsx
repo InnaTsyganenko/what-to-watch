@@ -13,7 +13,7 @@ import filmsProp from '../film-screen/films.prop';
 import reviewsProp from '../film-screen/reviews.prop';
 
 function App(props) {
-  const {promoFilm, films, reviews} = props;
+  const {promoFilm, movies, reviews} = props;
 
   return (
     <BrowserRouter>
@@ -21,7 +21,7 @@ function App(props) {
         <Route exact path={AppRoute.ROOT}>
           <MainScreen
             promoFilm={promoFilm}
-            films={films}
+            movies={movies}
           />
         </Route>
         <Route exact path={AppRoute.LOGIN}>
@@ -29,13 +29,13 @@ function App(props) {
         </Route>
         <Route exact path={AppRoute.MY_LIST}>
           <MyListScreen
-            films={films}
+            movies={movies}
           />
         </Route>
         <Route exact path={AppRoute.FILM}>
           <FilmScreen
             promoFilm={promoFilm}
-            films={films}
+            movies={movies}
             reviews={reviews}
           />
         </Route>
@@ -47,7 +47,7 @@ function App(props) {
         <Route exact path={AppRoute.PLAYER}>
           <PlayerScreen
             promoFilm={promoFilm}
-            films={films}
+            movies={movies}
           />
         </Route>
         <Route>
@@ -60,7 +60,7 @@ function App(props) {
 
 App.propTypes = {
   promoFilm: PropTypes.object.isRequired,
-  films: PropTypes.arrayOf(filmsProp).isRequired,
+  movies: PropTypes.arrayOf(filmsProp).isRequired,
   reviews: PropTypes.arrayOf(PropTypes.shape(reviewsProp)).isRequired,
 };
 

@@ -11,7 +11,7 @@ import FilmPageReviews from '../film-page-reviews/film-page-reviews';
 import CatalogLikeThis from '../catalog-like-this/catalog-like-this';
 import Copyright from '../copyright/copyright';
 function FilmScreen(props) {
-  const {promoFilm, films, reviews} = props;
+  const {promoFilm, movies, reviews} = props;
   const [state, setState] = useState({
     activeItem: {
       [filmStates.OVERVIEW]: true,
@@ -56,7 +56,7 @@ function FilmScreen(props) {
         </div>
       </section>
       <div className="page-content">
-        <CatalogLikeThis films={films} currentGenre={promoFilm.genre} />
+        <CatalogLikeThis movies={movies} currentGenre={promoFilm.genre} />
         <footer className="page-footer">
           <Logo logoClassName={logoClassName.FOOTER_LOGO} />
           <Copyright />
@@ -68,7 +68,7 @@ function FilmScreen(props) {
 
 FilmScreen.propTypes = {
   promoFilm: PropTypes.object.isRequired,
-  films: PropTypes.array.isRequired,
+  movies: PropTypes.array.isRequired,
   reviews: PropTypes.array.isRequired,
 };
 

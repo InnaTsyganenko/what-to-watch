@@ -7,7 +7,7 @@ import {logoClassName} from '../../const';
 import Copyright from '../copyright/copyright';
 
 function MyListScreen(props) {
-  const {films} = props;
+  const {movies} = props;
 
   return (
     <div className="user-page">
@@ -18,7 +18,7 @@ function MyListScreen(props) {
       </header>
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
-        <MoviesList films={films} />
+        <MoviesList movies={movies} />
       </section>
       <footer className="page-footer">
         <Logo logoClassName={logoClassName.FOOTER_LOGO} />
@@ -29,7 +29,7 @@ function MyListScreen(props) {
 }
 
 MyListScreen.propTypes = {
-  films: PropTypes.array.isRequired,
+  movies: PropTypes.array.isRequired,
 };
 
 export default MyListScreen;
