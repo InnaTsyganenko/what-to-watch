@@ -76,7 +76,7 @@ const films = [
     director: 'Wes Andreson',
     starring: ['Bill Murray', 'Edward Norton', 'Jude Law', 'Willem Dafoe', 'Saoirse Ronan'],
     runTime: 99,
-    genre: 'Drama',
+    genre: 'Thriller',
     released: 2014,
     isFavorite: false,
     reviews: [0],
