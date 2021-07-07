@@ -6,14 +6,14 @@ import PreviewPlayer from '../preview-player/preview-player';
 import {connect} from 'react-redux';
 
 function MoviesList(props) {
-  const {movies} = props;
+  const {movies, moviesCountForRender} = props;
 
   const history = useHistory();
   const handleFilmCardClick = () => history.push(AppRoute.FILM);
 
   return (
     <div className="catalog__films-list">
-      {movies.map((movie) => (
+      {movies.slice(0, moviesCountForRender).map((movie) => (
         <React.Fragment key={movie.id}>
           <article className="small-film-card catalog__films-card"
             onClick={handleFilmCardClick}
@@ -34,10 +34,12 @@ function MoviesList(props) {
 
 MoviesList.propTypes = {
   movies: PropTypes.array.isRequired,
+  moviesCountForRender: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   movies: state.movies,
+  moviesCountForRender: state.moviesCountForRender,
 });
 
 export default connect(mapStateToProps)(MoviesList);

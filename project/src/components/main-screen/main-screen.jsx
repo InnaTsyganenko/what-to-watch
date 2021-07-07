@@ -7,6 +7,7 @@ import UserBlock from '../user-block/user-block';
 import GenreList from '../genre-list/genre-list';
 import MoviesList from '../movies-list/movies-list';
 import FIlmCardButtons from '../film-card-buttons/film-card-buttons';
+import ShowMoreButton from '../show-more-button/show-more-button';
 import {logoClassName} from '../../const';
 import {connect} from 'react-redux';
 import {ActionCreator} from '../../store/action';
@@ -45,11 +46,15 @@ function MainScreen(props) {
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
-          <GenreList movies={movies} onFilterClick={onFilterClick} />
-          <MoviesList movies={movies} genre={genre} />
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
+          <GenreList
+            movies={movies}
+            onFilterClick={onFilterClick}
+          />
+          <MoviesList
+            movies={movies}
+            genre={genre}
+          />
+          <ShowMoreButton />
         </section>
         <footer className="page-footer">
           <Logo logoClassName={logoClassName.FOOTER_LOGO} />
@@ -73,6 +78,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   onFilterClick(genre, movies) {
+    dispatch(ActionCreator.resetFilters());
     dispatch(ActionCreator.changeGenre(genre));
     dispatch(ActionCreator.getListMovies(genre, movies));
   },

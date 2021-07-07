@@ -16,7 +16,6 @@ function GenreList(props) {
         <React.Fragment key={genre}>
           <li
             className={classnames({'catalog__genres-item':true, 'catalog__genres-item--active': genre === activeLi})}
-            // {`${genre === 'All genres' ? ' ' : 'catalog__genres-item'}`}
             onClick={() => {
               genre === 'All genres'
                 ? resetFilters()
