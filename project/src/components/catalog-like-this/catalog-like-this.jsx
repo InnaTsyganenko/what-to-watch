@@ -4,7 +4,7 @@ import {AppRoute} from '../../const';
 import PropTypes from 'prop-types';
 
 function CatalogLikeThis(props) {
-  const {films, currentGenre} = props;
+  const {movies, currentGenre} = props;
   const history = useHistory();
   const handleFilmCardClick = () => history.push(AppRoute.FILM);
 
@@ -12,7 +12,7 @@ function CatalogLikeThis(props) {
     <section className="catalog catalog--like-this">
       <h2 className="catalog__title">More like this</h2>
       <div className="catalog__films-list">
-        {films.filter((movie) => movie.genre === currentGenre).map((film) => (
+        {movies.filter((movie) => movie.genre === currentGenre).map((film) => (
           <React.Fragment key={film.id}>
             <article className="small-film-card catalog__films-card"
               onClick={handleFilmCardClick}
@@ -31,7 +31,7 @@ function CatalogLikeThis(props) {
 }
 
 CatalogLikeThis.propTypes = {
-  films: PropTypes.array.isRequired,
+  movies: PropTypes.array.isRequired,
   currentGenre: PropTypes.string.isRequired,
 };
 
