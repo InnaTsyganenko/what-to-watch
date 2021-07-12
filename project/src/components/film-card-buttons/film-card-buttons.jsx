@@ -3,7 +3,7 @@ import {AppRoute} from '../../const';
 import {useHistory, Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-function FIlmCardButtons(props) {
+function FilmCardButtons(props) {
   const {location} = props;
   const history = useHistory();
   const handlePlayButtonClick = () => history.push(AppRoute.PLAYER);
@@ -34,8 +34,8 @@ function FIlmCardButtons(props) {
   );
 }
 
-FIlmCardButtons.propTypes = {
+FilmCardButtons.propTypes = {
   location: PropTypes.any,
 };
 
-export default FIlmCardButtons;
+export default FilmCardButtons;

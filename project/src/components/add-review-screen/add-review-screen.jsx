@@ -1,20 +1,18 @@
 import {React, useState} from 'react';
 import {Link} from 'react-router-dom';
-import PropTypes from 'prop-types';
 import Logo from '../logo/logo';
 import UserBlock from '../user-block/user-block';
 import Rating from '../rating/rating';
 import {logoClassName} from '../../const';
-function AddReviewScreen(props) {
-  const {reviews} = props;
+function AddReviewScreen() {
 
   const [state, setState] = useState({
-    filmId: reviews[0].id,
-    userId: reviews[0].user.id,
-    userName: reviews[0].user.name,
+    filmId: '',
+    userId: '',
+    userName: '',
     reviewText: 'Review text',
     rating: 0,
-    dateReview: reviews[0].date,
+    dateReview: '',
   });
 
   function handleTextareaChange(event) {
@@ -67,9 +65,5 @@ function AddReviewScreen(props) {
     </section>
   );
 }
-
-AddReviewScreen.propTypes = {
-  reviews: PropTypes.array.isRequired,
-};
 
 export default AddReviewScreen;

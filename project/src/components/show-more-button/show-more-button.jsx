@@ -6,7 +6,7 @@ import {FILMS_RENDER_STEP} from '../../const';
 
 function ShowMoreButton(props) {
   const {moviesCountForRender, onShowMoreClick, moviesLength} = props;
-
+  const moviesCountForRenderWithStep = moviesCountForRender + FILMS_RENDER_STEP;
 
   return (
     <div className="catalog__more">
@@ -14,7 +14,7 @@ function ShowMoreButton(props) {
         ? null
         :
         <button className="catalog__button" type="button"
-          onClick={() => onShowMoreClick(moviesCountForRender + FILMS_RENDER_STEP, moviesLength)}
+          onClick={() => onShowMoreClick(moviesCountForRenderWithStep, moviesLength)}
         >
           Show more
         </button>}

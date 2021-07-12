@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
-import {AppRoute} from '../../const';
+import {AppRoute, AuthorizationStatus} from '../../const';
 import MainScreen from '../main-screen/main-screen';
 import LoginScreen from '../login-screen/login-screen';
 import MyListScreen from '../my-list-screen/my-list-screen';
@@ -9,46 +10,40 @@ import FilmScreen from '../film-screen/film-screen';
 import AddReviewScreen from '../add-review-screen/add-review-screen';
 import PlayerScreen from '../player-screen/player-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
-import filmsProp from '../film-screen/films.prop';
-import reviewsProp from '../film-screen/reviews.prop';
+import LoadingScreen from '../loading-screen/loading-screen';
 
 function App(props) {
-  const {promoFilm, movies, reviews} = props;
+  const {authorizationStatus, isDataLoaded} = props;
+
+  const isCheckedAuth = (authStatus) =>
+    authStatus === AuthorizationStatus.UNKNOWN;
+
+  if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.ROOT}>
-          <MainScreen
-            promoFilm={promoFilm}
-            movies={movies}
-          />
+          <MainScreen />
         </Route>
         <Route exact path={AppRoute.LOGIN}>
           <LoginScreen />
         </Route>
         <Route exact path={AppRoute.MY_LIST}>
-          <MyListScreen
-            movies={movies}
-          />
+          <MyListScreen />
         </Route>
         <Route exact path={AppRoute.FILM}>
-          <FilmScreen
-            promoFilm={promoFilm}
-            movies={movies}
-            reviews={reviews}
-          />
+          <FilmScreen />
         </Route>
         <Route exact path={AppRoute.ADD_REVIEW}>
-          <AddReviewScreen
-            reviews={reviews}
-          />
+          <AddReviewScreen />
         </Route>
         <Route exact path={AppRoute.PLAYER}>
-          <PlayerScreen
-            promoFilm={promoFilm}
-            movies={movies}
-          />
+          <PlayerScreen />
         </Route>
         <Route>
           <NotFoundScreen />
@@ -59,9 +54,14 @@ function App(props) {
 }
 
 App.propTypes = {
-  promoFilm: PropTypes.object.isRequired,
-  movies: PropTypes.arrayOf(filmsProp).isRequired,
-  reviews: PropTypes.arrayOf(PropTypes.shape(reviewsProp)).isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
+  isDataLoaded: PropTypes.bool.isRequired,
 };
 
-export default App;
+const mapStateToProps = (state) => ({
+  authorizationStatus: state.authorizationStatus,
+  isDataLoaded: state.isDataLoaded,
+});
+
+export {App};
+export default connect(mapStateToProps, null)(App);

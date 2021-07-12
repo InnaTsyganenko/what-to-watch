@@ -2,13 +2,13 @@ import React from 'react';
 import {useHistory} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {AppRoute} from '../../const';
-
+import {connect} from 'react-redux';
 function PlayerScreen(props) {
-  const {promoFilm} = props;
+  const {promo} = props;
   const history = useHistory();
   const handleExitButtonClick = () => history.push(AppRoute.ROOT);
 
-  const timestamp = promoFilm.runTime;
+  const timestamp = promo.runTime;
   const hours = Math.floor(timestamp / 60 / 60);
   const minutes = Math.floor(timestamp / 60) - (hours * 60);
   const seconds = timestamp % 60;
@@ -25,7 +25,7 @@ function PlayerScreen(props) {
     ].join(':');
   return (
     <div className="player">
-      <video src="#" className="player__video" poster={promoFilm.backgroundImage} />
+      <video src="#" className="player__video" poster={promo.backgroundImage} />
       <button type="button" className="player__exit"
         onClick={handleExitButtonClick}
       >Exit
@@ -59,7 +59,11 @@ function PlayerScreen(props) {
 }
 
 PlayerScreen.propTypes = {
-  promoFilm: PropTypes.object.isRequired,
+  promo: PropTypes.object.isRequired,
 };
 
-export default PlayerScreen;
+const mapStateToProps = (state) => ({
+  promo: state.promo,
+});
+
+export default connect(mapStateToProps)(PlayerScreen);

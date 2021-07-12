@@ -7,8 +7,8 @@ import classnames from 'classnames';
 import {DEFAULT_GENRE} from '../../const';
 
 function GenreList(props) {
-  const {movies, onFilterClick, resetFilters, activeLi} = props;
-  const genreList = movies.map((movie) => movie.genre);
+  const {movies, onFilterClick, resetFilters, activeLi, originalMovies} = props;
+  const genreList = originalMovies.map((movie) => movie.genre);
 
   return (
     <ul className="catalog__genres-list">
@@ -19,7 +19,7 @@ function GenreList(props) {
             onClick={() => {
               genre === 'All genres'
                 ? resetFilters()
-                : onFilterClick(genre, movies);
+                : onFilterClick(genre, movies, originalMovies);
             }}
           >
             <Link to="/" className="catalog__genres-link">{genre}</Link>
@@ -30,6 +30,7 @@ function GenreList(props) {
 }
 
 GenreList.propTypes = {
+  originalMovies: PropTypes.array.isRequired,
   movies: PropTypes.array.isRequired,
   onFilterClick: PropTypes.func.isRequired,
   resetFilters: PropTypes.func.isRequired,
@@ -37,7 +38,9 @@ GenreList.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
+  originalMovies: state.originalMovies,
   activeLi: state.genre,
+  movies: state.movies,
 });
 
 const mapDispatchToProps = (dispatch) => ({

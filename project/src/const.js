@@ -23,3 +23,18 @@ export const RATINGS = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
 export const DEFAULT_GENRE = 'All genres';
 
 export const FILMS_RENDER_STEP = 8;
+
+export const AuthorizationStatus = {
+  AUTH: 'AUTH',
+  NO_AUTH: 'NO_AUTH',
+  UNKNOWN: 'UNKNOWN',
+};
+
+export const APIRoute = {
+  MOVIES: '/films',
+  PROMO: '/promo',
+  FAVORITE: '/favorite',
+  LOGIN: '/login',
+  LOGOUT: '/logout',
+  COMMENTS: '/comments/1',
+};
