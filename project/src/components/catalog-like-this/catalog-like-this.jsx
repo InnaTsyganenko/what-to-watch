@@ -14,7 +14,7 @@ function CatalogLikeThis(props) {
     <section className="catalog catalog--like-this">
       <h2 className="catalog__title">More like this</h2>
       <div className="catalog__films-list">
-        {originalMovies.filter((movie) => movie.genre === currentGenre).map((movie) => (
+        {originalMovies.filter((movie) => movie.genre === currentGenre).slice(0, 4).map((movie) => (
           <React.Fragment key={movie.id}>
             <article className="small-film-card catalog__films-card"
               onClick={handleFilmCardClick}

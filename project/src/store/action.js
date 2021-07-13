@@ -1,12 +1,14 @@
 export const ActionType = {
   SLICE_LIST_MOVIES: 'SLICE_LIST_MOVIES',
   FILTER_LIST_MOVIES: 'FILTER_LIST_MOVIES',
-  RESET_FILTER: 'RESET_FILTER',
+  RESET_STATE: 'RESET_STATE',
   LOAD_PROMO: 'data/loadPromo',
   LOAD_MOVIES: 'data/loadMovies',
   LOAD_COMMENTS: 'data/loadComments',
   REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
+  LOGIN: 'user/login',
   LOGOUT: 'user/logout',
+  REDIRECT_TO_ROUTE: 'REDIRECT_TO_ROUTE',
 };
 
 export const ActionCreator = {
@@ -28,19 +30,26 @@ export const ActionCreator = {
     moviesCountForRender: moviesCountForRender,
     moviesLength: moviesLength,
   }),
-  filterListMovies: (genre, movies, originalMovies) => ({
+  filterListMovies: (genre, originalMovies) => ({
     type: ActionType.FILTER_LIST_MOVIES,
     genre: genre,
     movies: originalMovies.filter((movie) => movie.genre === genre),
   }),
-  resetFilters: () => ({
-    type: ActionType.RESET_FILTER,
+  resetState: () => ({
+    type: ActionType.RESET_STATE,
   }),
   requireAuthorization: (status) => ({
     type: ActionType.REQUIRED_AUTHORIZATION,
     payload: status,
   }),
+  login: () => ({
+    type: ActionType.LOGIN,
+  }),
   logout: () => ({
     type: ActionType.LOGOUT,
+  }),
+  redirectToRoute: (url) => ({
+    type: ActionType.REDIRECT_TO_ROUTE,
+    payload: url,
   }),
 };

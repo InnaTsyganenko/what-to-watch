@@ -37,6 +37,9 @@ const mapDispatchToProps = (dispatch) => ({
   onShowMoreClick(moviesCountForRender, moviesLength) {
     dispatch(ActionCreator.sliceListMovies(moviesCountForRender, moviesLength));
   },
+  resetState() {
+    dispatch(ActionCreator.resetState());
+  },
 });
 
 export {ShowMoreButton};

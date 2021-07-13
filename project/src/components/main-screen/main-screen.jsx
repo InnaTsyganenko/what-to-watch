@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import {useLocation, useHistory} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Logo from '../logo/logo';
 import Copyright from '../copyright/copyright';
@@ -13,8 +13,15 @@ import {connect} from 'react-redux';
 import {ActionCreator} from '../../store/action';
 
 function MainScreen(props) {
-  const {promo, movies, genre, onFilterClick} = props;
+  const {promo, movies, genre, onFilterClick, resetState} = props;
   const location = useLocation();
+  const history = useHistory();
+
+  history.listen((action) => {
+    if (action.pathname !== '/') {
+      resetState();
+    }
+  });
 
   return (
     <React.Fragment>
@@ -69,6 +76,7 @@ MainScreen.propTypes = {
   promo: PropTypes.object.isRequired,
   movies: PropTypes.array.isRequired,
   onFilterClick: PropTypes.func.isRequired,
+  resetState: PropTypes.func.isRequired,
   genre: PropTypes.string.isRequired,
 };
 
@@ -79,8 +87,11 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onFilterClick(genre, movies, originalMovies) {
-    dispatch(ActionCreator.filterListMovies(genre, movies, originalMovies));
+  onFilterClick(genre, originalMovies) {
+    dispatch(ActionCreator.filterListMovies(genre, originalMovies));
+  },
+  resetState() {
+    dispatch(ActionCreator.resetState());
   },
 });
 

@@ -5,9 +5,10 @@ import PropTypes from 'prop-types';
 
 function FilmCardButtons(props) {
   const {location} = props;
+
   const history = useHistory();
   const handlePlayButtonClick = () => history.push(AppRoute.PLAYER);
-  const handleMyListButtonClick = () => history.push(AppRoute.MY_LIST);
+  const handleMyListButtonClick = () => '';
 
   return (
     <div className="film-card__buttons">

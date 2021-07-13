@@ -46,11 +46,17 @@ const reducer = (state = initialState, action) => {
         genre: action.genre,
         movies: action.movies,
       };
-    case ActionType.RESET_FILTER:
+    case ActionType.RESET_STATE:
       return {
         ...state,
         genre: initialState.genre,
         movies: state.originalMovies,
+        moviesCountForRender: initialState.moviesCountForRender,
+      };
+    case ActionType.LOGIN:
+      return {
+        ...state,
+        authorizationStatus: AuthorizationStatus.AUTH,
       };
     case ActionType.LOGOUT:
       return {
