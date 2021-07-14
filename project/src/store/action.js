@@ -1,14 +1,14 @@
 export const ActionType = {
-  SLICE_LIST_MOVIES: 'SLICE_LIST_MOVIES',
-  FILTER_LIST_MOVIES: 'FILTER_LIST_MOVIES',
-  RESET_STATE: 'RESET_STATE',
+  SLICE_LIST_MOVIES: 'sliceListMovies',
+  FILTER_LIST_MOVIES: 'filterListMovies',
+  RESET_STATE: 'resetState',
   LOAD_PROMO: 'data/loadPromo',
   LOAD_MOVIES: 'data/loadMovies',
   LOAD_COMMENTS: 'data/loadComments',
   REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
   LOGIN: 'user/login',
   LOGOUT: 'user/logout',
-  REDIRECT_TO_ROUTE: 'REDIRECT_TO_ROUTE',
+  REDIRECT_TO_ROUTE: 'redirectToRoute',
 };
 
 export const ActionCreator = {

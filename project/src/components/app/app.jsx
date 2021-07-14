@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {Switch, Route, Router as BrowserRouter} from 'react-router-dom';
 import PrivateRoute from '../private-route/private-route';
-import {AppRoute, AuthorizationStatus} from '../../const';
+import {AppRoute, AuthorizationStatus, FILMS_RENDER_STEP, DEFAULT_GENRE} from '../../const';
 import MainScreen from '../main-screen/main-screen';
 import LoginScreen from '../login-screen/login-screen';
 import MyListScreen from '../my-list-screen/my-list-screen';
@@ -13,8 +13,9 @@ import PlayerScreen from '../player-screen/player-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import LoadingScreen from '../loading-screen/loading-screen';
 import browserHistory from '../../browser-history';
+import {ActionCreator} from '../../store/action';
 function App(props) {
-  const {authorizationStatus, isDataLoaded} = props;
+  const {authorizationStatus, isDataLoaded, resetState, genre, moviesCountForRender} = props;
 
   const isCheckedAuth = (authStatus) =>
     authStatus === AuthorizationStatus.UNKNOWN;
@@ -24,6 +25,12 @@ function App(props) {
       <LoadingScreen />
     );
   }
+
+  browserHistory.listen((location) =>  {
+    if ((genre !== DEFAULT_GENRE || moviesCountForRender !== FILMS_RENDER_STEP) && location.pathname !== AppRoute.ROOT) {
+      resetState();
+    }
+  });
 
   return (
     <BrowserRouter history={browserHistory}>
@@ -63,12 +70,23 @@ function App(props) {
 App.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
   isDataLoaded: PropTypes.bool.isRequired,
+  resetState: PropTypes.func.isRequired,
+  moviesCountForRender: PropTypes.number.isRequired,
+  genre: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   authorizationStatus: state.authorizationStatus,
   isDataLoaded: state.isDataLoaded,
+  genre: state.genre,
+  moviesCountForRender: state.moviesCountForRender,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  resetState() {
+    dispatch(ActionCreator.resetState());
+  },
 });
 
 export {App};
-export default connect(mapStateToProps, null)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
