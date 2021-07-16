@@ -15,7 +15,14 @@ import LoadingScreen from '../loading-screen/loading-screen';
 import browserHistory from '../../browser-history';
 import {ActionCreator} from '../../store/action';
 function App(props) {
-  const {authorizationStatus, isDataLoaded, resetState, genre, moviesCountForRender} = props;
+  const {
+    authorizationStatus,
+    isDataLoaded,
+    resetState,
+    genre,
+    moviesCountForRender,
+    getIdMovie,
+    pickedId} = props;
 
   const isCheckedAuth = (authStatus) =>
     authStatus === AuthorizationStatus.UNKNOWN;
@@ -27,16 +34,23 @@ function App(props) {
   }
 
   browserHistory.listen((location) =>  {
-    if ((genre !== DEFAULT_GENRE || moviesCountForRender !== FILMS_RENDER_STEP) && location.pathname !== AppRoute.ROOT) {
+    if ((genre !== DEFAULT_GENRE
+      || moviesCountForRender !== FILMS_RENDER_STEP)
+      && location.pathname !== AppRoute.ROOT) {
       resetState();
     }
   });
+
+  const handleFilmCardClick = (id) => browserHistory.push(`${AppRoute.FILM}${id}`);
 
   return (
     <BrowserRouter history={browserHistory}>
       <Switch>
         <Route exact path={AppRoute.ROOT}>
-          <MainScreen />
+          <MainScreen
+            getIdMovie={getIdMovie}
+            handleFilmCardClick={handleFilmCardClick}
+          />
         </Route>
         <Route exact path={AppRoute.LOGIN}>
           <LoginScreen />
@@ -47,8 +61,11 @@ function App(props) {
           render={() => <MyListScreen />}
         >
         </PrivateRoute>
-        <Route exact path={AppRoute.FILM}>
-          <FilmScreen />
+        <Route path={`${AppRoute.FILM}${pickedId}`}>
+          <FilmScreen
+            getIdMovie={getIdMovie}
+            handleFilmCardClick={handleFilmCardClick}
+          />
         </Route>
         <PrivateRoute
           exact
@@ -72,7 +89,9 @@ App.propTypes = {
   isDataLoaded: PropTypes.bool.isRequired,
   resetState: PropTypes.func.isRequired,
   moviesCountForRender: PropTypes.number.isRequired,
+  pickedId: PropTypes.number,
   genre: PropTypes.string.isRequired,
+  getIdMovie: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -80,11 +99,15 @@ const mapStateToProps = (state) => ({
   isDataLoaded: state.isDataLoaded,
   genre: state.genre,
   moviesCountForRender: state.moviesCountForRender,
+  pickedId: state.pickedId,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   resetState() {
     dispatch(ActionCreator.resetState());
+  },
+  getIdMovie(pickedId) {
+    dispatch(ActionCreator.getIdMovie(pickedId));
   },
 });
 

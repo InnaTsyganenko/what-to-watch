@@ -9,6 +9,7 @@ export const ActionType = {
   LOGIN: 'user/login',
   LOGOUT: 'user/logout',
   REDIRECT_TO_ROUTE: 'redirectToRoute',
+  GET_ID_MOVIE: 'getIdMovie',
 };
 
 export const ActionCreator = {
@@ -51,5 +52,9 @@ export const ActionCreator = {
   redirectToRoute: (url) => ({
     type: ActionType.REDIRECT_TO_ROUTE,
     payload: url,
+  }),
+  getIdMovie: (pickedId) => ({
+    type: ActionType.GET_ID_MOVIE,
+    pickedId: pickedId,
   }),
 };

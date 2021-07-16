@@ -1,4 +1,4 @@
-import {React} from 'react';
+import React from 'react';
 import {AppRoute} from '../../const';
 import {useHistory, Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
