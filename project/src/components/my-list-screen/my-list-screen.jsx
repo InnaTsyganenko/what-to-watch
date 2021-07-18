@@ -5,6 +5,7 @@ import UserBlock from '../user-block/user-block';
 import MoviesList from '../movies-list/movies-list';
 import {logoClassName} from '../../const';
 import Copyright from '../copyright/copyright';
+import {connect} from 'react-redux';
 
 function MyListScreen(props) {
   const {movies} = props;
@@ -32,4 +33,8 @@ MyListScreen.propTypes = {
   movies: PropTypes.array.isRequired,
 };
 
-export default MyListScreen;
+const mapStateToProps = (state) => ({
+  movies: state.movies,
+});
+
+export default connect(mapStateToProps)(MyListScreen);

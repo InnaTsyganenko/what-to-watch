@@ -1,27 +1,30 @@
 import React from 'react';
-import {useHistory} from 'react-router-dom';
-import {AppRoute} from '../../const';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import PreviewPlayer from '../preview-player/preview-player';
 
 function CatalogLikeThis(props) {
-  const {movies, currentGenre} = props;
-  const history = useHistory();
-  const handleFilmCardClick = () => history.push(AppRoute.FILM);
+  const {originalMovies, currentGenre, getIdMovie, pickedId, handleFilmCardClick} = props;
 
   return (
     <section className="catalog catalog--like-this">
       <h2 className="catalog__title">More like this</h2>
       <div className="catalog__films-list">
-        {movies.filter((movie) => movie.genre === currentGenre).map((film) => (
-          <React.Fragment key={film.id}>
+        {originalMovies.filter((movie) => (movie.id !== pickedId) && (movie.genre === currentGenre)).slice(0, 4).map((movie) => (
+          <React.Fragment key={movie.id}>
             <article className="small-film-card catalog__films-card"
-              onClick={handleFilmCardClick}
+              onClick={() => {
+                getIdMovie(movie.id);
+                handleFilmCardClick(movie.id);
+              }}
             >
-              <div className="small-film-card__image">
-                <img src={film.previewImage} alt={film.name} width={280} height={175} />
-              </div>
+              <PreviewPlayer
+                movie={movie}
+                autoPlay={false}
+                src={movie.previewVideoLink}
+              />
               <h3 className="small-film-card__title">
-                <a className="small-film-card__link" href="film-page.html">{film.name}</a>
+                <a className="small-film-card__link" href="film-page.html">{movie.name}</a>
               </h3>
             </article>
           </React.Fragment>))}
@@ -31,8 +34,16 @@ function CatalogLikeThis(props) {
 }
 
 CatalogLikeThis.propTypes = {
-  movies: PropTypes.array.isRequired,
+  originalMovies: PropTypes.array.isRequired,
   currentGenre: PropTypes.string.isRequired,
+  pickedId: PropTypes.number.isRequired,
+  getIdMovie: PropTypes.func.isRequired,
+  handleFilmCardClick: PropTypes.func.isRequired,
 };
 
-export default CatalogLikeThis;
+const mapStateToProps = (state) => ({
+  originalMovies: state.originalMovies,
+  pickedId: state.pickedId,
+});
+
+export default connect(mapStateToProps)(CatalogLikeThis);

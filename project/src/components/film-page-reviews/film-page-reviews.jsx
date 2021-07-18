@@ -1,38 +1,39 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 function FilmPageReviews(props) {
-  const {reviews} = props;
+  const {comments} = props;
   const humanizedDate = { month: 'long', day: 'numeric', year: 'numeric' };
 
   return (
     <div className="film-card__reviews film-card__row">
       <div className="film-card__reviews-col">
-        {reviews.slice(0, reviews.length/2).map((review) => (
-          <React.Fragment key={review.id}>
+        {comments.slice(comments.length/2, comments.length).map((comment) => (
+          <React.Fragment key={comment.id}>
             <div className="review">
               <blockquote className="review__quote">
-                <p className="review__text">{review.comment}</p>
+                <p className="review__text">{comment.comment}</p>
                 <footer className="review__details">
-                  <cite className="review__author">{review.user.name}</cite>
-                  <time className="review__date" dateTime={review.date.toISOString()}>{review.date.toLocaleDateString('en-US', humanizedDate)}</time>
+                  <cite className="review__author">{comment.user.name}</cite>
+                  <time className="review__date" dateTime={comment.date}>{new Date(comment.date).toLocaleDateString('en-US', humanizedDate)}</time>
                 </footer>
               </blockquote>
-              <div className="review__rating">{review.rating}</div>
+              <div className="review__rating">{comment.rating}</div>
             </div>
           </React.Fragment>))}
       </div>
       <div className="film-card__reviews-col">
-        {reviews.slice(reviews.length/2, reviews.length).map((review) => (
-          <React.Fragment key={review.id}>
+        {comments.slice(0, comments.length/2).map((comment) => (
+          <React.Fragment key={comment.id}>
             <div className="review">
               <blockquote className="review__quote">
-                <p className="review__text">{review.comment}</p>
+                <p className="review__text">{comment.comment}</p>
                 <footer className="review__details">
-                  <cite className="review__author">{review.user.name}</cite>
-                  <time className="review__date" dateTime={review.date.toISOString()}>{review.date.toLocaleDateString('en-US', humanizedDate)}</time>
+                  <cite className="review__author">{comment.user.name}</cite>
+                  <time className="review__date" dateTime={comment.date}>{new Date(comment.date).toLocaleDateString('en-US', humanizedDate)}</time>
                 </footer>
               </blockquote>
-              <div className="review__rating">{review.rating}</div>
+              <div className="review__rating">{comment.rating}</div>
             </div>
           </React.Fragment>))}
       </div>
@@ -41,7 +42,11 @@ function FilmPageReviews(props) {
 }
 
 FilmPageReviews.propTypes = {
-  reviews: PropTypes.array.isRequired,
+  comments: PropTypes.array.isRequired,
 };
 
-export default FilmPageReviews;
+const mapStateToProps = (state) => ({
+  comments: state.comments,
+});
+
+export default connect(mapStateToProps)(FilmPageReviews);

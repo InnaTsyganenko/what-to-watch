@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function FilmPageDetails(props) {
-  const {promoFilm} = props;
+  const {movie} = props;
 
   const humanizedRunTime = (duration) => {
     let result = `${duration}m`;
@@ -18,31 +18,31 @@ function FilmPageDetails(props) {
 
   return (
     <div className="film-card__text film-card__row">
-      <React.Fragment key={promoFilm.id}>
+      <React.Fragment key={movie.id}>
         <div className="film-card__text-col">
           <p className="film-card__details-item">
             <strong className="film-card__details-name">Director</strong>
-            <span className="film-card__details-value">{promoFilm.director}</span>
+            <span className="film-card__details-value">{movie.director}</span>
           </p>
           <p className="film-card__details-item">
             <strong className="film-card__details-name">Starring</strong>
             <span className="film-card__details-value">
-              {promoFilm.starring.join('\n')}
+              {movie.starring.join('\n')}
             </span>
           </p>
         </div>
         <div className="film-card__text-col">
           <p className="film-card__details-item">
             <strong className="film-card__details-name">Run Time</strong>
-            <span className="film-card__details-value">{humanizedRunTime(promoFilm.runTime)}</span>
+            <span className="film-card__details-value">{humanizedRunTime(movie.runTime)}</span>
           </p>
           <p className="film-card__details-item">
             <strong className="film-card__details-name">Genre</strong>
-            <span className="film-card__details-value">{promoFilm.genre}</span>
+            <span className="film-card__details-value">{movie.genre}</span>
           </p>
           <p className="film-card__details-item">
             <strong className="film-card__details-name">Released</strong>
-            <span className="film-card__details-value">{promoFilm.released}</span>
+            <span className="film-card__details-value">{movie.released}</span>
           </p>
         </div>
       </React.Fragment>
@@ -51,7 +51,7 @@ function FilmPageDetails(props) {
 }
 
 FilmPageDetails.propTypes = {
-  promoFilm: PropTypes.object.isRequired,
+  movie: PropTypes.object.isRequired,
 };
 
 export default FilmPageDetails;

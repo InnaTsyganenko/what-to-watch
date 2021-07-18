@@ -2,9 +2,10 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {filmStates} from '../../const';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 
 function FilmCardTabs(props) {
-  const {state, setState} = props;
+  const {state, setState, pickedId} = props;
 
   function toggleActiveItem(activeState) {
     setState({
@@ -24,7 +25,7 @@ function FilmCardTabs(props) {
               className={`film-nav__item
                 ${(state.activeItem[filmState]) && ' film-nav__item--active'}`}
             >
-              <Link to="/films/:id" className="film-nav__link">{filmState}</Link>
+              <Link to={`/films/${pickedId}`} className="film-nav__link">{filmState}</Link>
             </li>
           </React.Fragment>))}
       </ul>
@@ -35,6 +36,11 @@ function FilmCardTabs(props) {
 FilmCardTabs.propTypes = {
   state: PropTypes.any,
   setState: PropTypes.any,
+  pickedId: PropTypes.number.isRequired,
 };
 
-export default FilmCardTabs;
+const mapStateToProps = (state) => ({
+  pickedId: state.pickedId,
+});
+
+export default connect(mapStateToProps)(FilmCardTabs);

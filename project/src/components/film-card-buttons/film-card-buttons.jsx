@@ -1,13 +1,16 @@
-import {React} from 'react';
+import React from 'react';
 import {AppRoute} from '../../const';
 import {useHistory, Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {AuthorizationStatus} from '../../const';
 
-function FIlmCardButtons(props) {
-  const {location} = props;
+function FilmCardButtons(props) {
+  const {location, pickedId, authorizationStatus} = props;
+
   const history = useHistory();
   const handlePlayButtonClick = () => history.push(AppRoute.PLAYER);
-  const handleMyListButtonClick = () => history.push(AppRoute.MY_LIST);
+  const handleMyListButtonClick = () => '';
 
   return (
     <div className="film-card__buttons">
@@ -27,15 +30,28 @@ function FIlmCardButtons(props) {
         </svg>
         <span>My list</span>
       </button>
-      {(location === '/')
+      {(location === '/' || authorizationStatus !== AuthorizationStatus.AUTH)
         ? null
-        : <Link className="btn film-card__button" to="/films/:id/review">Add review</Link>}
+        :
+        <Link
+          className="btn film-card__button"
+          to={`${AppRoute.FILM}${pickedId}${AppRoute.ADD_REVIEW}`}
+        >
+        Add review
+        </Link>}
     </div>
   );
 }
 
-FIlmCardButtons.propTypes = {
+FilmCardButtons.propTypes = {
+  authorizationStatus: PropTypes.string.isRequired,
   location: PropTypes.any,
+  pickedId: PropTypes.number.isRequired,
 };
 
-export default FIlmCardButtons;
+const mapStateToProps = (state) => ({
+  pickedId: state.pickedId,
+  authorizationStatus: state.authorizationStatus,
+});
+
+export default connect(mapStateToProps)(FilmCardButtons);

@@ -1,20 +1,21 @@
-import {React, useState} from 'react';
+import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
-import PropTypes from 'prop-types';
 import Logo from '../logo/logo';
 import UserBlock from '../user-block/user-block';
 import Rating from '../rating/rating';
 import {logoClassName} from '../../const';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 function AddReviewScreen(props) {
-  const {reviews} = props;
+  const {pickedId} = props;
 
   const [state, setState] = useState({
-    filmId: reviews[0].id,
-    userId: reviews[0].user.id,
-    userName: reviews[0].user.name,
+    filmId: '',
+    userId: '',
+    userName: '',
     reviewText: 'Review text',
     rating: 0,
-    dateReview: reviews[0].date,
+    dateReview: '',
   });
 
   function handleTextareaChange(event) {
@@ -36,10 +37,10 @@ function AddReviewScreen(props) {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link className="breadcrumbs__link" to="/films/:id">The Grand Budapest Hotel</Link>
+                <Link className="breadcrumbs__link" to={`/films/${pickedId}`}>The Grand Budapest Hotel</Link>
               </li>
               <li className="breadcrumbs__item">
-                <Link className="breadcrumbs__link" to="/films/:id/review">Add review</Link>
+                <Link className="breadcrumbs__link" to={`/films/${pickedId}/review`}>Add review</Link>
               </li>
             </ul>
           </nav>
@@ -69,7 +70,12 @@ function AddReviewScreen(props) {
 }
 
 AddReviewScreen.propTypes = {
-  reviews: PropTypes.array.isRequired,
+  pickedId: PropTypes.number.isRequired,
 };
 
-export default AddReviewScreen;
+const mapStateToProps = (state) => ({
+  pickedId: state.pickedId,
+  authorizationStatus: state.authorizationStatus,
+});
+
+export default connect(mapStateToProps)(AddReviewScreen);

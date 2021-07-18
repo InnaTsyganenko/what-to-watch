@@ -7,19 +7,19 @@ import classnames from 'classnames';
 import {DEFAULT_GENRE} from '../../const';
 
 function GenreList(props) {
-  const {movies, onFilterClick, resetFilters, activeLi} = props;
-  const genreList = movies.map((movie) => movie.genre);
+  const {onFilterClick, resetState, activeLi, originalMovies} = props;
+  const genreList = originalMovies.map((movie) => movie.genre);
 
   return (
     <ul className="catalog__genres-list">
-      {[DEFAULT_GENRE, ...new Set(genreList)].map((genre) => (
+      {[DEFAULT_GENRE, ...new Set(genreList)].slice(0, 10).map((genre) => (
         <React.Fragment key={genre}>
           <li
             className={classnames({'catalog__genres-item':true, 'catalog__genres-item--active': genre === activeLi})}
             onClick={() => {
               genre === 'All genres'
-                ? resetFilters()
-                : onFilterClick(genre, movies);
+                ? resetState()
+                : onFilterClick(genre, originalMovies);
             }}
           >
             <Link to="/" className="catalog__genres-link">{genre}</Link>
@@ -30,19 +30,21 @@ function GenreList(props) {
 }
 
 GenreList.propTypes = {
-  movies: PropTypes.array.isRequired,
+  originalMovies: PropTypes.array.isRequired,
   onFilterClick: PropTypes.func.isRequired,
-  resetFilters: PropTypes.func.isRequired,
+  resetState: PropTypes.func.isRequired,
   activeLi: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
+  originalMovies: state.originalMovies,
   activeLi: state.genre,
+  movies: state.movies,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  resetFilters() {
-    dispatch(ActionCreator.resetFilters());
+  resetState() {
+    dispatch(ActionCreator.resetState());
   },
 });
 
