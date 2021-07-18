@@ -11,14 +11,25 @@ import {ActionCreator} from './store/action';
 import {checkAuth, fetchMoviesList, fetchPromo, fetchComments} from './store/api-actions';
 import {AuthorizationStatus} from './const';
 import {redirect} from './store/middlewares/redirect';
+import {PersistGate} from 'redux-persist/integration/react';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+
+const persistConfig = {
+  key: 'root',
+  storage,
+  blacklist: ['genre', 'moviesCountForRender', 'authorizationStatus', 'moviesLength'],
+};
 
 const api = createAPI(
   // eslint-disable-next-line no-use-before-define
   () => store.dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH)),
 );
 
+const persistedReducer = persistReducer(persistConfig, reducer);
+
 const store = createStore(
-  reducer,
+  persistedReducer,
   composeWithDevTools(
     applyMiddleware(thunk.withExtraArgument(api)),
     applyMiddleware(redirect),
@@ -30,10 +41,14 @@ store.dispatch(fetchPromo());
 store.dispatch(fetchMoviesList());
 store.dispatch(fetchComments());
 
+const persistor = persistStore(store);
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <PersistGate loading={null} persistor={persistor}>
+        <App />
+      </PersistGate>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'),

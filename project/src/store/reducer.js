@@ -63,6 +63,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         authorizationStatus: AuthorizationStatus.NO_AUTH,
       };
+    case ActionType.GET_ID_MOVIE:
+      return {
+        ...state,
+        pickedId: action.pickedId,
+      };
     default:
       return state;
   }

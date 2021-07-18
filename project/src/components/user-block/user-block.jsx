@@ -29,7 +29,7 @@ function UserBlock(props) {
               logoutGame();
             }
           }}
-          to="/login"
+          to={AppRoute.LOGIN}
         >
           {authorizationStatus === AuthorizationStatus.AUTH
             ? 'Sign Out'

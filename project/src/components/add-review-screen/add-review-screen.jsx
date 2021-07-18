@@ -1,10 +1,13 @@
-import {React, useState} from 'react';
+import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 import Logo from '../logo/logo';
 import UserBlock from '../user-block/user-block';
 import Rating from '../rating/rating';
 import {logoClassName} from '../../const';
-function AddReviewScreen() {
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+function AddReviewScreen(props) {
+  const {pickedId} = props;
 
   const [state, setState] = useState({
     filmId: '',
@@ -34,10 +37,10 @@ function AddReviewScreen() {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link className="breadcrumbs__link" to="/films/:id">The Grand Budapest Hotel</Link>
+                <Link className="breadcrumbs__link" to={`/films/${pickedId}`}>The Grand Budapest Hotel</Link>
               </li>
               <li className="breadcrumbs__item">
-                <Link className="breadcrumbs__link" to="/films/:id/review">Add review</Link>
+                <Link className="breadcrumbs__link" to={`/films/${pickedId}/review`}>Add review</Link>
               </li>
             </ul>
           </nav>
@@ -66,4 +69,13 @@ function AddReviewScreen() {
   );
 }
 
-export default AddReviewScreen;
+AddReviewScreen.propTypes = {
+  pickedId: PropTypes.number.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  pickedId: state.pickedId,
+  authorizationStatus: state.authorizationStatus,
+});
+
+export default connect(mapStateToProps)(AddReviewScreen);

@@ -1,5 +1,5 @@
 import React from 'react';
-import {useLocation, useHistory} from 'react-router-dom';
+import {useLocation} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Logo from '../logo/logo';
 import Copyright from '../copyright/copyright';
@@ -13,15 +13,8 @@ import {connect} from 'react-redux';
 import {ActionCreator} from '../../store/action';
 
 function MainScreen(props) {
-  const {promo, movies, genre, onFilterClick, resetState} = props;
+  const {promo, movies, genre, onFilterClick, getIdMovie, handleFilmCardClick} = props;
   const location = useLocation();
-  const history = useHistory();
-
-  history.listen((action) => {
-    if (action.pathname !== '/') {
-      resetState();
-    }
-  });
 
   return (
     <React.Fragment>
@@ -60,6 +53,8 @@ function MainScreen(props) {
           <MoviesList
             movies={movies}
             genre={genre}
+            getIdMovie={getIdMovie}
+            handleFilmCardClick={handleFilmCardClick}
           />
           <ShowMoreButton />
         </section>
@@ -76,8 +71,9 @@ MainScreen.propTypes = {
   promo: PropTypes.object.isRequired,
   movies: PropTypes.array.isRequired,
   onFilterClick: PropTypes.func.isRequired,
-  resetState: PropTypes.func.isRequired,
+  getIdMovie: PropTypes.func.isRequired,
   genre: PropTypes.string.isRequired,
+  handleFilmCardClick: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -89,9 +85,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   onFilterClick(genre, originalMovies) {
     dispatch(ActionCreator.filterListMovies(genre, originalMovies));
-  },
-  resetState() {
-    dispatch(ActionCreator.resetState());
   },
 });
 
