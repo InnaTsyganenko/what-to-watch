@@ -69,3 +69,7 @@ export const logout = () => (dispatch, _getState, api) => (
     .then(() => localStorage.removeItem('token'))
     .then(() => dispatch(ActionCreator.logout()))
 );
+
+export const pushComment = (filmId, rating, comment) => (dispatch, _getState, api) => (
+  api.post(`${APIRoute.COMMENTS}${filmId}`, {rating, comment})
+);

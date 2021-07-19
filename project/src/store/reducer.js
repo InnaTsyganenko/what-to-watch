@@ -57,6 +57,7 @@ const reducer = (state = initialState, action) => {
         genre: initialState.genre,
         originalMovies: state.originalMovies,
         moviesCountForRender: initialState.moviesCountForRender,
+        filtredMovies: state.originalMovies.filter((movie) => true).map((movie) => movie.id),
       };
     case ActionType.LOGIN:
       return {
