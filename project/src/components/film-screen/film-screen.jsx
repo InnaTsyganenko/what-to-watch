@@ -11,17 +11,23 @@ import FilmPageReviews from '../film-page-reviews/film-page-reviews';
 import CatalogLikeThis from '../catalog-like-this/catalog-like-this';
 import Copyright from '../copyright/copyright';
 import {connect} from 'react-redux';
+import {fetchComments, fetchSimilarMoviesList} from '../../store/api-actions';
 function FilmScreen(props) {
-  const {movies, pickedId, getIdMovie, handleFilmCardClick} = props;
+  const {originalMovies, pickedId, getIdMovie, handleFilmCardClick, loadSimilarMovies, loadComments} = props;
   const [state, setState] = useState({
     activeItem: {
       [filmStates.OVERVIEW]: true,
     },
   });
 
+  const onLoadData = () => {
+    loadSimilarMovies(pickedId);
+    loadComments(pickedId);
+  };
+
   return (
-    <div>
-      {movies.filter((movie) => movie.id === pickedId).map((movie) => (
+    <div onLoad={onLoadData}>
+      {originalMovies.filter((movie) => movie.id === pickedId).map((movie) => (
         <React.Fragment key={movie.id}>
           <section className="film-card film-card--full">
             <div className="film-card__hero">
@@ -60,7 +66,6 @@ function FilmScreen(props) {
           </section>
           <div className="page-content">
             <CatalogLikeThis
-              currentGenre={movie.genre}
               getIdMovie={getIdMovie}
               handleFilmCardClick={handleFilmCardClick}
             />
@@ -75,16 +80,27 @@ function FilmScreen(props) {
 }
 
 FilmScreen.propTypes = {
-  movies: PropTypes.array.isRequired,
+  originalMovies: PropTypes.array.isRequired,
   pickedId: PropTypes.number,
   getIdMovie: PropTypes.func.isRequired,
+  loadComments: PropTypes.func.isRequired,
+  loadSimilarMovies: PropTypes.func.isRequired,
   handleFilmCardClick: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  movies: state.movies,
-  comments: state.comments,
+  originalMovies: state.originalMovies,
   pickedId: state.pickedId,
 });
 
-export default connect(mapStateToProps)(FilmScreen);
+const mapDispatchToProps = (dispatch) => ({
+  loadSimilarMovies(id) {
+    dispatch(fetchSimilarMoviesList(id));
+  },
+  loadComments(id) {
+    dispatch(fetchComments(id));
+  },
+});
+
+export {FilmScreen};
+export default connect(mapStateToProps, mapDispatchToProps)(FilmScreen);

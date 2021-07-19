@@ -41,8 +41,13 @@ export const fetchMoviesList = () => (dispatch, _getState, api) => (
     .then(({data}) => dispatch(ActionCreator.loadMovies(data.map((element) => fromApi(element)))))
 );
 
-export const fetchComments = () => (dispatch, _getState, api) => (
-  api.get(APIRoute.COMMENTS)
+export const fetchSimilarMoviesList = (id) => (dispatch, _getState, api) => (
+  api.get(`${APIRoute.MOVIES}/${id}${APIRoute.SIMILAR}`)
+    .then(({data}) => dispatch(ActionCreator.loadSimilarMovies(data.map((element) => fromApi(element)))))
+);
+
+export const fetchComments = (id) => (dispatch, _getState, api) => (
+  api.get(`${APIRoute.COMMENTS}${id}`)
     .then(({data}) => dispatch(ActionCreator.loadComments(data)))
 );
 

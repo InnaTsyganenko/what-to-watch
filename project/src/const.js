@@ -36,5 +36,6 @@ export const APIRoute = {
   FAVORITE: '/favorite',
   LOGIN: '/login',
   LOGOUT: '/logout',
-  COMMENTS: '/comments/1',
+  COMMENTS: '/comments/',
+  SIMILAR: '/similar',
 };

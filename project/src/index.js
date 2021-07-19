@@ -8,17 +8,17 @@ import {Provider} from 'react-redux';
 import {reducer} from './store/reducer';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import {ActionCreator} from './store/action';
-import {checkAuth, fetchMoviesList, fetchPromo, fetchComments} from './store/api-actions';
+import {checkAuth, fetchMoviesList, fetchPromo} from './store/api-actions';
 import {AuthorizationStatus} from './const';
 import {redirect} from './store/middlewares/redirect';
 import {PersistGate} from 'redux-persist/integration/react';
-import { persistStore, persistReducer } from 'redux-persist';
+import {persistStore, persistReducer} from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['genre', 'moviesCountForRender', 'authorizationStatus', 'moviesLength'],
+  blacklist: ['genre', 'moviesCountForRender', 'authorizationStatus'],
 };
 
 const api = createAPI(
@@ -39,7 +39,6 @@ const store = createStore(
 store.dispatch(checkAuth());
 store.dispatch(fetchPromo());
 store.dispatch(fetchMoviesList());
-store.dispatch(fetchComments());
 
 const persistor = persistStore(store);
 

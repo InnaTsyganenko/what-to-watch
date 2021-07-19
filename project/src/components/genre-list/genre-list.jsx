@@ -39,7 +39,6 @@ GenreList.propTypes = {
 const mapStateToProps = (state) => ({
   originalMovies: state.originalMovies,
   activeLi: state.genre,
-  movies: state.movies,
 });
 
 const mapDispatchToProps = (dispatch) => ({

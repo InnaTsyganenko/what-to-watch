@@ -4,13 +4,13 @@ import {connect} from 'react-redux';
 import PreviewPlayer from '../preview-player/preview-player';
 
 function CatalogLikeThis(props) {
-  const {originalMovies, currentGenre, getIdMovie, pickedId, handleFilmCardClick} = props;
+  const {similarMovies, getIdMovie, handleFilmCardClick, pickedId} = props;
 
   return (
     <section className="catalog catalog--like-this">
       <h2 className="catalog__title">More like this</h2>
       <div className="catalog__films-list">
-        {originalMovies.filter((movie) => (movie.id !== pickedId) && (movie.genre === currentGenre)).slice(0, 4).map((movie) => (
+        {similarMovies.filter((movie) => movie.id !== pickedId).slice(0, 4).map((movie) => (
           <React.Fragment key={movie.id}>
             <article className="small-film-card catalog__films-card"
               onClick={() => {
@@ -34,15 +34,14 @@ function CatalogLikeThis(props) {
 }
 
 CatalogLikeThis.propTypes = {
-  originalMovies: PropTypes.array.isRequired,
-  currentGenre: PropTypes.string.isRequired,
-  pickedId: PropTypes.number.isRequired,
+  similarMovies: PropTypes.array,
   getIdMovie: PropTypes.func.isRequired,
   handleFilmCardClick: PropTypes.func.isRequired,
+  pickedId: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  originalMovies: state.originalMovies,
+  similarMovies: state.similarMovies,
   pickedId: state.pickedId,
 });
 
