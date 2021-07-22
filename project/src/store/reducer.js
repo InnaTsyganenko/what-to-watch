@@ -57,7 +57,7 @@ const reducer = (state = initialState, action) => {
         genre: initialState.genre,
         originalMovies: state.originalMovies,
         moviesCountForRender: initialState.moviesCountForRender,
-        filtredMovies: state.originalMovies.filter((movie) => true).map((movie) => movie.id),
+        filtredMovies: state.originalMovies.map((movie) => movie.id),
       };
     case ActionType.LOGIN:
       return {
@@ -73,6 +73,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         pickedId: action.pickedId,
+      };
+    case ActionType.HANDLE_ERRORS:
+      return {
+        ...state,
+        error: action.payload,
       };
     default:
       return state;

@@ -11,6 +11,7 @@ export const ActionType = {
   LOGOUT: 'user/logout',
   REDIRECT_TO_ROUTE: 'redirectToRoute',
   GET_ID_MOVIE: 'getIdMovie',
+  HANDLE_ERRORS: 'handleErrors',
 };
 
 export const ActionCreator = {
@@ -60,5 +61,9 @@ export const ActionCreator = {
   getIdMovie: (pickedId) => ({
     type: ActionType.GET_ID_MOVIE,
     pickedId: pickedId,
+  }),
+  handleErrors: (error) => ({
+    type: ActionType.HANDLE_ERRORS,
+    payload: error,
   }),
 };

@@ -23,13 +23,16 @@ function FilmScreen(props) {
   const onLoadData = () => {
     loadSimilarMovies(pickedId);
     loadComments(pickedId);
+    setState({activeItem: {
+      [filmStates.OVERVIEW]: true,
+    }});
   };
 
   return (
     <div onLoad={onLoadData}>
       {originalMovies.filter((movie) => movie.id === pickedId).map((movie) => (
         <React.Fragment key={movie.id}>
-          <section className="film-card film-card--full">
+          <section className="film-card film-card--full" style={{backgroundColor: movie.backgroundColor}}>
             <div className="film-card__hero">
               <div className="film-card__bg">
                 <img src={movie.backgroundImage} alt={movie.name} />
@@ -57,7 +60,7 @@ function FilmScreen(props) {
                 </div>
                 <div className="film-card__desc">
                   <FilmCardTabs state={state} setState={setState} />
-                  {(state.state === 'Overview' || state.activeItem[filmStates.OVERVIEW]) && <FilmPageOverview />}
+                  {(state.state === 'Overview' || state.activeItem[filmStates.OVERVIEW]) && <FilmPageOverview movie={movie} />}
                   {(state.activeItem[filmStates.DETAILS]) && <FilmPageDetails movie={movie} />}
                   {(state.activeItem[filmStates.REVIEWS]) && <FilmPageReviews />}
                 </div>

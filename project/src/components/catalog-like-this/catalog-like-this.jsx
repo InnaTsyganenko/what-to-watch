@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import PreviewPlayer from '../preview-player/preview-player';
+import SmallFilmCard from '../small-film-card/small-film-card';
 
 function CatalogLikeThis(props) {
   const {similarMovies, getIdMovie, handleFilmCardClick, pickedId} = props;
@@ -12,21 +12,11 @@ function CatalogLikeThis(props) {
       <div className="catalog__films-list">
         {similarMovies.filter((movie) => movie.id !== pickedId).slice(0, 4).map((movie) => (
           <React.Fragment key={movie.id}>
-            <article className="small-film-card catalog__films-card"
-              onClick={() => {
-                getIdMovie(movie.id);
-                handleFilmCardClick(movie.id);
-              }}
-            >
-              <PreviewPlayer
-                movie={movie}
-                autoPlay={false}
-                src={movie.previewVideoLink}
-              />
-              <h3 className="small-film-card__title">
-                <a className="small-film-card__link" href="film-page.html">{movie.name}</a>
-              </h3>
-            </article>
+            <SmallFilmCard
+              movie={movie}
+              getIdMovie={getIdMovie}
+              handleFilmCardClick={handleFilmCardClick}
+            />
           </React.Fragment>))}
       </div>
     </section>

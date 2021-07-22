@@ -1,5 +1,6 @@
 import {ActionCreator} from './action';
 import {AppRoute, AuthorizationStatus, APIRoute} from '../const';
+import {showAlert} from '../utils';
 
 export const fromApi = (apiObj) => {
   const adapted = Object.assign(
@@ -72,4 +73,8 @@ export const logout = () => (dispatch, _getState, api) => (
 
 export const pushComment = (filmId, rating, comment) => (dispatch, _getState, api) => (
   api.post(`${APIRoute.COMMENTS}${filmId}`, {rating, comment})
+    .then(() => dispatch(ActionCreator.redirectToRoute(`${APIRoute.MOVIES}/${filmId}`)))
+    .catch((err) => {
+      showAlert(`Something wrong, please try again :( This is some kind of ${err}...`);
+    })
 );
