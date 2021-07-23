@@ -8,7 +8,7 @@ import Copyright from '../copyright/copyright';
 import {connect} from 'react-redux';
 
 function MyListScreen(props) {
-  const {movies} = props;
+  const {filtredMovies} = props;
 
   return (
     <div className="user-page">
@@ -19,7 +19,7 @@ function MyListScreen(props) {
       </header>
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
-        <MoviesList movies={movies} />
+        <MoviesList filtredMovies={filtredMovies} />
       </section>
       <footer className="page-footer">
         <Logo logoClassName={logoClassName.FOOTER_LOGO} />
@@ -30,11 +30,11 @@ function MyListScreen(props) {
 }
 
 MyListScreen.propTypes = {
-  movies: PropTypes.array.isRequired,
+  filtredMovies: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  movies: state.movies,
+  filtredMovies: state.filtredMovies,
 });
 
 export default connect(mapStateToProps)(MyListScreen);

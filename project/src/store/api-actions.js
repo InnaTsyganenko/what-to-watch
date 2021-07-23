@@ -1,5 +1,6 @@
 import {ActionCreator} from './action';
 import {AppRoute, AuthorizationStatus, APIRoute} from '../const';
+import {showAlert} from '../utils';
 
 export const fromApi = (apiObj) => {
   const adapted = Object.assign(
@@ -41,8 +42,13 @@ export const fetchMoviesList = () => (dispatch, _getState, api) => (
     .then(({data}) => dispatch(ActionCreator.loadMovies(data.map((element) => fromApi(element)))))
 );
 
-export const fetchComments = () => (dispatch, _getState, api) => (
-  api.get(APIRoute.COMMENTS)
+export const fetchSimilarMoviesList = (id) => (dispatch, _getState, api) => (
+  api.get(`${APIRoute.MOVIES}/${id}${APIRoute.SIMILAR}`)
+    .then(({data}) => dispatch(ActionCreator.loadSimilarMovies(data.map((element) => fromApi(element)))))
+);
+
+export const fetchComments = (id) => (dispatch, _getState, api) => (
+  api.get(`${APIRoute.COMMENTS}${id}`)
     .then(({data}) => dispatch(ActionCreator.loadComments(data)))
 );
 
@@ -63,4 +69,12 @@ export const logout = () => (dispatch, _getState, api) => (
   api.delete(APIRoute.LOGOUT)
     .then(() => localStorage.removeItem('token'))
     .then(() => dispatch(ActionCreator.logout()))
+);
+
+export const pushComment = (filmId, rating, comment) => (dispatch, _getState, api) => (
+  api.post(`${APIRoute.COMMENTS}${filmId}`, {rating, comment})
+    .then(() => dispatch(ActionCreator.redirectToRoute(`${APIRoute.MOVIES}/${filmId}`)))
+    .catch((err) => {
+      showAlert(`Something wrong, please try again :( This is some kind of ${err}...`);
+    })
 );

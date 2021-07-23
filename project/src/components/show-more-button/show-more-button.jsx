@@ -30,7 +30,7 @@ ShowMoreButton.propTypes = {
 
 const mapStateToProps = (state) => ({
   moviesCountForRender: state.moviesCountForRender,
-  moviesLength: state.movies.length,
+  moviesLength: state.filtredMovies.length,
 });
 
 const mapDispatchToProps = (dispatch) => ({

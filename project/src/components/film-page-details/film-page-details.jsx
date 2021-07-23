@@ -26,9 +26,13 @@ function FilmPageDetails(props) {
           </p>
           <p className="film-card__details-item">
             <strong className="film-card__details-name">Starring</strong>
-            <span className="film-card__details-value">
-              {movie.starring.join('\n')}
-            </span>
+            {movie.starring
+              .map((star) => (
+                <React.Fragment key={star}>
+                  <span className="film-card__details-value">{star}</span>
+                  <br></br>
+                </React.Fragment>
+              ))}
           </p>
         </div>
         <div className="film-card__text-col">

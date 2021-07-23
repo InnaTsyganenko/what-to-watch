@@ -19,10 +19,10 @@ export const filmStates = {
 };
 
 export const RATINGS = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
-
 export const DEFAULT_GENRE = 'All genres';
-
 export const FILMS_RENDER_STEP = 8;
+export const MIN_LENGTH_COMMENT = 50;
+export const MAX_LENGTH_COMMENT = 400;
 
 export const AuthorizationStatus = {
   AUTH: 'AUTH',
@@ -36,5 +36,6 @@ export const APIRoute = {
   FAVORITE: '/favorite',
   LOGIN: '/login',
   LOGOUT: '/logout',
-  COMMENTS: '/comments/1',
+  COMMENTS: '/comments/',
+  SIMILAR: '/similar',
 };

@@ -13,7 +13,7 @@ import {connect} from 'react-redux';
 import {ActionCreator} from '../../store/action';
 
 function MainScreen(props) {
-  const {promo, movies, genre, onFilterClick, getIdMovie, handleFilmCardClick} = props;
+  const {promo, filtredMovies, genre, onFilterClick, getIdMovie, handleFilmCardClick} = props;
   const location = useLocation();
 
   return (
@@ -47,11 +47,11 @@ function MainScreen(props) {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
           <GenreList
-            movies={movies}
+            filtredMovies={filtredMovies}
             onFilterClick={onFilterClick}
           />
           <MoviesList
-            movies={movies}
+            filtredMovies={filtredMovies}
             genre={genre}
             getIdMovie={getIdMovie}
             handleFilmCardClick={handleFilmCardClick}
@@ -69,7 +69,7 @@ function MainScreen(props) {
 
 MainScreen.propTypes = {
   promo: PropTypes.object.isRequired,
-  movies: PropTypes.array.isRequired,
+  filtredMovies: PropTypes.array.isRequired,
   onFilterClick: PropTypes.func.isRequired,
   getIdMovie: PropTypes.func.isRequired,
   genre: PropTypes.string.isRequired,
@@ -79,7 +79,7 @@ MainScreen.propTypes = {
 const mapStateToProps = (state) => ({
   genre: state.genre,
   promo: state.promo,
-  movies: state.movies,
+  filtredMovies: state.filtredMovies,
 });
 
 const mapDispatchToProps = (dispatch) => ({

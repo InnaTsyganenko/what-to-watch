@@ -4,7 +4,8 @@ import {FILMS_RENDER_STEP, AuthorizationStatus} from '../const';
 const initialState = {
   genre: 'All genres',
   promo: {},
-  movies: [],
+  originalMovies: [],
+  similarMovies: [],
   moviesCountForRender: FILMS_RENDER_STEP,
   authorizationStatus: AuthorizationStatus.UNKNOWN,
   isDataLoaded: false,
@@ -21,8 +22,13 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         originalMovies: action.originalMovies,
-        movies: action.movies,
+        filtredMovies: action.filtredMovies,
         isDataLoaded: true,
+      };
+    case ActionType.LOAD_SIMILAR:
+      return {
+        ...state,
+        similarMovies: action.similarMovies,
       };
     case ActionType.LOAD_COMMENTS:
       return {
@@ -38,20 +44,20 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         moviesCountForRender: action.moviesCountForRender,
-        moviesLength: state.movies.length,
       };
     case ActionType.FILTER_LIST_MOVIES:
       return {
         ...state,
         genre: action.genre,
-        movies: action.movies,
+        filtredMovies: action.filtredMovies,
       };
     case ActionType.RESET_STATE:
       return {
         ...state,
         genre: initialState.genre,
-        movies: state.originalMovies,
+        originalMovies: state.originalMovies,
         moviesCountForRender: initialState.moviesCountForRender,
+        filtredMovies: state.originalMovies.map((movie) => movie.id),
       };
     case ActionType.LOGIN:
       return {
@@ -67,6 +73,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         pickedId: action.pickedId,
+      };
+    case ActionType.HANDLE_ERRORS:
+      return {
+        ...state,
+        error: action.payload,
       };
     default:
       return state;

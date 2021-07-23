@@ -4,12 +4,14 @@ export const ActionType = {
   RESET_STATE: 'resetState',
   LOAD_PROMO: 'data/loadPromo',
   LOAD_MOVIES: 'data/loadMovies',
+  LOAD_SIMILAR: 'data/loadSimilarMovies',
   LOAD_COMMENTS: 'data/loadComments',
   REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
   LOGIN: 'user/login',
   LOGOUT: 'user/logout',
   REDIRECT_TO_ROUTE: 'redirectToRoute',
   GET_ID_MOVIE: 'getIdMovie',
+  HANDLE_ERRORS: 'handleErrors',
 };
 
 export const ActionCreator = {
@@ -20,21 +22,24 @@ export const ActionCreator = {
   loadMovies: (movies) => ({
     type: ActionType.LOAD_MOVIES,
     originalMovies: movies,
-    movies: movies,
+    filtredMovies: movies.map((movie) => movie.id),
+  }),
+  loadSimilarMovies: (similarMovies) => ({
+    type: ActionType.LOAD_SIMILAR,
+    similarMovies: similarMovies,
   }),
   loadComments: (comments) => ({
     type: ActionType.LOAD_COMMENTS,
     comments: comments,
   }),
-  sliceListMovies: (moviesCountForRender, moviesLength) => ({
+  sliceListMovies: (moviesCountForRender) => ({
     type: ActionType.SLICE_LIST_MOVIES,
     moviesCountForRender: moviesCountForRender,
-    moviesLength: moviesLength,
   }),
   filterListMovies: (genre, originalMovies) => ({
     type: ActionType.FILTER_LIST_MOVIES,
     genre: genre,
-    movies: originalMovies.filter((movie) => movie.genre === genre),
+    filtredMovies: originalMovies.filter((movie) => movie.genre === genre).map((movie) => movie.id),
   }),
   resetState: () => ({
     type: ActionType.RESET_STATE,
@@ -56,5 +61,9 @@ export const ActionCreator = {
   getIdMovie: (pickedId) => ({
     type: ActionType.GET_ID_MOVIE,
     pickedId: pickedId,
+  }),
+  handleErrors: (error) => ({
+    type: ActionType.HANDLE_ERRORS,
+    payload: error,
   }),
 };
