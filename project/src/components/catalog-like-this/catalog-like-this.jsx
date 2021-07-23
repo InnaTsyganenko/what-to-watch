@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import SmallFilmCard from '../small-film-card/small-film-card';
 
 function CatalogLikeThis(props) {
-  const {similarMovies, getIdMovie, handleFilmCardClick, pickedId} = props;
+  const {similarMovies, handleFilmCardClick, pickedId} = props;
 
   return (
     <section className="catalog catalog--like-this">
@@ -14,7 +14,6 @@ function CatalogLikeThis(props) {
           <React.Fragment key={movie.id}>
             <SmallFilmCard
               movie={movie}
-              getIdMovie={getIdMovie}
               handleFilmCardClick={handleFilmCardClick}
             />
           </React.Fragment>))}
@@ -25,7 +24,6 @@ function CatalogLikeThis(props) {
 
 CatalogLikeThis.propTypes = {
   similarMovies: PropTypes.array,
-  getIdMovie: PropTypes.func.isRequired,
   handleFilmCardClick: PropTypes.func.isRequired,
   pickedId: PropTypes.number.isRequired,
 };

@@ -1,4 +1,5 @@
 import React from 'react';
+import {useDispatch} from 'react-redux';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {Switch, Route, Router as BrowserRouter} from 'react-router-dom';
@@ -13,16 +14,16 @@ import PlayerScreen from '../player-screen/player-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import LoadingScreen from '../loading-screen/loading-screen';
 import browserHistory from '../../browser-history';
-import {ActionCreator} from '../../store/action';
+import {resetState} from '../../store/action';
 function App(props) {
   const {
     authorizationStatus,
     isDataLoaded,
-    resetState,
     genre,
     moviesCountForRender,
-    getIdMovie,
     pickedId} = props;
+
+  const dispatch = useDispatch();
 
   const isCheckedAuth = (authStatus) =>
     authStatus === AuthorizationStatus.UNKNOWN;
@@ -37,7 +38,7 @@ function App(props) {
     if ((genre !== DEFAULT_GENRE
       || moviesCountForRender !== FILMS_RENDER_STEP)
       && location.pathname !== AppRoute.ROOT) {
-      resetState();
+      dispatch(resetState());
     }
   });
 
@@ -48,7 +49,6 @@ function App(props) {
       <Switch>
         <Route exact path={AppRoute.ROOT}>
           <MainScreen
-            getIdMovie={getIdMovie}
             handleFilmCardClick={handleFilmCardClick}
           />
         </Route>
@@ -63,7 +63,6 @@ function App(props) {
         </PrivateRoute>
         <Route exact path={`${AppRoute.FILM}${pickedId}`} >
           <FilmScreen
-            getIdMovie={getIdMovie}
             handleFilmCardClick={handleFilmCardClick}
           />
         </Route>
@@ -87,11 +86,9 @@ function App(props) {
 App.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
   isDataLoaded: PropTypes.bool.isRequired,
-  resetState: PropTypes.func.isRequired,
   moviesCountForRender: PropTypes.number.isRequired,
   pickedId: PropTypes.number,
   genre: PropTypes.string.isRequired,
-  getIdMovie: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -102,14 +99,4 @@ const mapStateToProps = (state) => ({
   pickedId: state.pickedId,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  resetState() {
-    dispatch(ActionCreator.resetState());
-  },
-  getIdMovie(pickedId) {
-    dispatch(ActionCreator.getIdMovie(pickedId));
-  },
-});
-
-export {App};
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, null)(App);

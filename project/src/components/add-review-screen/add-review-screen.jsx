@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {pushComment} from '../../store/api-actions';
 function AddReviewScreen(props) {
-  const {pickedId, originalMovies, sendComment} = props;
+  const {pickedId, movies, sendComment} = props;
 
   const [state, setState] = useState({
     filmId: '',
@@ -41,7 +41,7 @@ function AddReviewScreen(props) {
 
   return (
     <div>
-      {originalMovies.filter((movie) => movie.id === pickedId).map((movie) => (
+      {movies.filter((movie) => movie.id === pickedId).map((movie) => (
         <React.Fragment key={movie.id}>
           <section className="film-card film-card--full" style={{backgroundColor: movie.backgroundColor}}>
             <div className="film-card__header">
@@ -115,14 +115,14 @@ function AddReviewScreen(props) {
 
 AddReviewScreen.propTypes = {
   pickedId: PropTypes.number.isRequired,
-  originalMovies: PropTypes.array.isRequired,
+  movies: PropTypes.array.isRequired,
   sendComment: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   pickedId: state.pickedId,
   authorizationStatus: state.authorizationStatus,
-  originalMovies: state.originalMovies,
+  movies: state.movies,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -1,14 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Logo from '../logo/logo';
 import UserBlock from '../user-block/user-block';
 import MoviesList from '../movies-list/movies-list';
 import {logoClassName} from '../../const';
 import Copyright from '../copyright/copyright';
-import {connect} from 'react-redux';
 
-function MyListScreen(props) {
-  const {filtredMovies} = props;
+function MyListScreen() {
 
   return (
     <div className="user-page">
@@ -19,7 +16,7 @@ function MyListScreen(props) {
       </header>
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
-        <MoviesList filtredMovies={filtredMovies} />
+        <MoviesList />
       </section>
       <footer className="page-footer">
         <Logo logoClassName={logoClassName.FOOTER_LOGO} />
@@ -29,12 +26,4 @@ function MyListScreen(props) {
   );
 }
 
-MyListScreen.propTypes = {
-  filtredMovies: PropTypes.array.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  filtredMovies: state.filtredMovies,
-});
-
-export default connect(mapStateToProps)(MyListScreen);
+export default MyListScreen;
