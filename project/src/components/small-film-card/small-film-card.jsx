@@ -1,14 +1,17 @@
 import React from 'react';
+import {useDispatch} from 'react-redux';
 import PropTypes from 'prop-types';
 import PreviewPlayer from '../preview-player/preview-player';
+import {getIdMovie} from '../../store/action';
 
 function SmallFilmCard(props) {
-  const {movie, getIdMovie, handleFilmCardClick} = props;
+  const {movie, handleFilmCardClick} = props;
+  const dispatch = useDispatch();
 
   return (
     <article className="small-film-card catalog__films-card"
       onClick={() => {
-        getIdMovie(movie.id);
+        dispatch(getIdMovie(movie.id));
         handleFilmCardClick(movie.id);
       }}
     >
@@ -26,7 +29,6 @@ function SmallFilmCard(props) {
 
 SmallFilmCard.propTypes = {
   movie: PropTypes.object.isRequired,
-  getIdMovie: PropTypes.func,
   handleFilmCardClick: PropTypes.func.isRequired,
 };
 

@@ -4,7 +4,7 @@ import {FILMS_RENDER_STEP, AuthorizationStatus} from '../const';
 const initialState = {
   genre: 'All genres',
   promo: {},
-  originalMovies: [],
+  movies: [],
   similarMovies: [],
   moviesCountForRender: FILMS_RENDER_STEP,
   authorizationStatus: AuthorizationStatus.UNKNOWN,
@@ -16,24 +16,24 @@ const reducer = (state = initialState, action) => {
     case ActionType.LOAD_PROMO:
       return {
         ...state,
-        promo: action.promo,
+        promo: action.payload,
       };
     case ActionType.LOAD_MOVIES:
       return {
         ...state,
-        originalMovies: action.originalMovies,
-        filtredMovies: action.filtredMovies,
+        movies: action.payload,
+        filtredMovies: state.movies.map((movie) => movie.id),
         isDataLoaded: true,
       };
     case ActionType.LOAD_SIMILAR:
       return {
         ...state,
-        similarMovies: action.similarMovies,
+        similarMovies: action.payload,
       };
     case ActionType.LOAD_COMMENTS:
       return {
         ...state,
-        comments: action.comments,
+        comments: action.payload,
       };
     case ActionType.REQUIRED_AUTHORIZATION:
       return {
@@ -43,26 +43,21 @@ const reducer = (state = initialState, action) => {
     case ActionType.SLICE_LIST_MOVIES:
       return {
         ...state,
-        moviesCountForRender: action.moviesCountForRender,
+        moviesCountForRender: action.payload,
       };
     case ActionType.FILTER_LIST_MOVIES:
       return {
         ...state,
-        genre: action.genre,
-        filtredMovies: action.filtredMovies,
+        genre: action.payload,
+        filtredMovies: state.movies.filter((movie) => movie.genre === action.payload).map((movie) => movie.id),
       };
     case ActionType.RESET_STATE:
       return {
         ...state,
         genre: initialState.genre,
-        originalMovies: state.originalMovies,
+        movies: state.movies,
         moviesCountForRender: initialState.moviesCountForRender,
-        filtredMovies: state.originalMovies.map((movie) => movie.id),
-      };
-    case ActionType.LOGIN:
-      return {
-        ...state,
-        authorizationStatus: AuthorizationStatus.AUTH,
+        filtredMovies: state.movies.map((movie) => movie.id),
       };
     case ActionType.LOGOUT:
       return {
@@ -72,12 +67,7 @@ const reducer = (state = initialState, action) => {
     case ActionType.GET_ID_MOVIE:
       return {
         ...state,
-        pickedId: action.pickedId,
-      };
-    case ActionType.HANDLE_ERRORS:
-      return {
-        ...state,
-        error: action.payload,
+        pickedId: action.payload,
       };
     default:
       return state;

@@ -10,10 +10,9 @@ import FilmCardButtons from '../film-card-buttons/film-card-buttons';
 import ShowMoreButton from '../show-more-button/show-more-button';
 import {logoClassName} from '../../const';
 import {connect} from 'react-redux';
-import {ActionCreator} from '../../store/action';
 
 function MainScreen(props) {
-  const {promo, filtredMovies, genre, onFilterClick, getIdMovie, handleFilmCardClick} = props;
+  const {promo, genre, handleFilmCardClick} = props;
   const location = useLocation();
 
   return (
@@ -46,14 +45,9 @@ function MainScreen(props) {
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
-          <GenreList
-            filtredMovies={filtredMovies}
-            onFilterClick={onFilterClick}
-          />
+          <GenreList />
           <MoviesList
-            filtredMovies={filtredMovies}
             genre={genre}
-            getIdMovie={getIdMovie}
             handleFilmCardClick={handleFilmCardClick}
           />
           <ShowMoreButton />
@@ -69,9 +63,6 @@ function MainScreen(props) {
 
 MainScreen.propTypes = {
   promo: PropTypes.object.isRequired,
-  filtredMovies: PropTypes.array.isRequired,
-  onFilterClick: PropTypes.func.isRequired,
-  getIdMovie: PropTypes.func.isRequired,
   genre: PropTypes.string.isRequired,
   handleFilmCardClick: PropTypes.func.isRequired,
 };
@@ -79,14 +70,7 @@ MainScreen.propTypes = {
 const mapStateToProps = (state) => ({
   genre: state.genre,
   promo: state.promo,
-  filtredMovies: state.filtredMovies,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onFilterClick(genre, originalMovies) {
-    dispatch(ActionCreator.filterListMovies(genre, originalMovies));
-  },
 });
 
 export {MoviesList};
-export default connect(mapStateToProps, mapDispatchToProps)(MainScreen);
+export default connect(mapStateToProps, null)(MainScreen);

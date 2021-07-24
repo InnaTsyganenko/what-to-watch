@@ -4,33 +4,34 @@ import SmallFilmCard from '../small-film-card/small-film-card';
 import {connect} from 'react-redux';
 
 function MoviesList(props) {
-  const {originalMovies, filtredMovies, moviesCountForRender, getIdMovie, handleFilmCardClick} = props;
+  const {movies, moviesCountForRender, handleFilmCardClick, filtredMovies} = props;
 
   return (
     <div className="catalog__films-list">
-      {originalMovies.filter(({id}) => filtredMovies.includes(id)).slice(0, moviesCountForRender).map((movie) => (
-        <React.Fragment key={movie.id}>
-          <SmallFilmCard
-            movie={movie}
-            getIdMovie={getIdMovie}
-            handleFilmCardClick={handleFilmCardClick}
-          />
-        </React.Fragment>))}
+      {movies
+        .filter(({id}) => filtredMovies.includes(id))
+        .slice(0, moviesCountForRender)
+        .map((movie) => (
+          <React.Fragment key={movie.id}>
+            <SmallFilmCard
+              movie={movie}
+              handleFilmCardClick={handleFilmCardClick}
+            />
+          </React.Fragment>))}
     </div>
   );
 }
 
 MoviesList.propTypes = {
-  originalMovies: PropTypes.array.isRequired,
+  movies: PropTypes.array.isRequired,
   filtredMovies: PropTypes.array.isRequired,
   moviesCountForRender: PropTypes.number.isRequired,
-  getIdMovie: PropTypes.func,
   handleFilmCardClick: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
+  movies: state.movies,
   filtredMovies: state.filtredMovies,
-  originalMovies: state.originalMovies,
   moviesCountForRender: state.moviesCountForRender,
 });
 

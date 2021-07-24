@@ -1,4 +1,4 @@
-import {ActionCreator} from './action';
+import {loadPromo, loadMovies, requireAuthorization, logout as closeSession, redirectToRoute, loadSimilarMovies, loadComments} from './action';
 import {AppRoute, AuthorizationStatus, APIRoute} from '../const';
 import {showAlert} from '../utils';
 
@@ -34,46 +34,46 @@ export const fromApi = (apiObj) => {
 
 export const fetchPromo = () => (dispatch, _getState, api) => (
   api.get(APIRoute.PROMO)
-    .then(({data}) => dispatch(ActionCreator.loadPromo(fromApi(data))))
+    .then(({data}) => dispatch(loadPromo(fromApi(data))))
 );
 
 export const fetchMoviesList = () => (dispatch, _getState, api) => (
   api.get(APIRoute.MOVIES)
-    .then(({data}) => dispatch(ActionCreator.loadMovies(data.map((element) => fromApi(element)))))
+    .then(({data}) => dispatch(loadMovies(data.map((element) => fromApi(element)))))
 );
 
 export const fetchSimilarMoviesList = (id) => (dispatch, _getState, api) => (
   api.get(`${APIRoute.MOVIES}/${id}${APIRoute.SIMILAR}`)
-    .then(({data}) => dispatch(ActionCreator.loadSimilarMovies(data.map((element) => fromApi(element)))))
+    .then(({data}) => dispatch(loadSimilarMovies(data.map((element) => fromApi(element)))))
 );
 
 export const fetchComments = (id) => (dispatch, _getState, api) => (
   api.get(`${APIRoute.COMMENTS}${id}`)
-    .then(({data}) => dispatch(ActionCreator.loadComments(data)))
+    .then(({data}) => dispatch(loadComments(data)))
 );
 
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(APIRoute.LOGIN)
-    .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH)))
+    .then(() => dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH)))
     .catch(() => {})
 );
 
 export const login = ({login: email, password}) => (dispatch, _getState, api) => (
   api.post(APIRoute.LOGIN, {email, password})
     .then(({data}) => localStorage.setItem('token', data.token))
-    .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
-    .then(() => dispatch(ActionCreator.redirectToRoute(AppRoute.ROOT)))
+    .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
+    .then(() => dispatch(redirectToRoute(AppRoute.ROOT)))
 );
 
 export const logout = () => (dispatch, _getState, api) => (
   api.delete(APIRoute.LOGOUT)
     .then(() => localStorage.removeItem('token'))
-    .then(() => dispatch(ActionCreator.logout()))
+    .then(() => dispatch(closeSession()))
 );
 
 export const pushComment = (filmId, rating, comment) => (dispatch, _getState, api) => (
   api.post(`${APIRoute.COMMENTS}${filmId}`, {rating, comment})
-    .then(() => dispatch(ActionCreator.redirectToRoute(`${APIRoute.MOVIES}/${filmId}`)))
+    .then(() => dispatch(redirectToRoute(`${APIRoute.MOVIES}/${filmId}`)))
     .catch((err) => {
       showAlert(`Something wrong, please try again :( This is some kind of ${err}...`);
     })

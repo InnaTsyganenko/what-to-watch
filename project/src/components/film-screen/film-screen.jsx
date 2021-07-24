@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {useDispatch} from 'react-redux';
 import PropTypes from 'prop-types';
 import Logo from '../logo/logo';
 import UserBlock from '../user-block/user-block';
@@ -11,9 +12,10 @@ import FilmPageReviews from '../film-page-reviews/film-page-reviews';
 import CatalogLikeThis from '../catalog-like-this/catalog-like-this';
 import Copyright from '../copyright/copyright';
 import {connect} from 'react-redux';
-import {fetchComments, fetchSimilarMoviesList} from '../../store/api-actions';
+import {fetchSimilarMoviesList, fetchComments} from '../../store/api-actions';
 function FilmScreen(props) {
-  const {originalMovies, pickedId, getIdMovie, handleFilmCardClick, loadSimilarMovies, loadComments} = props;
+  const {movies, pickedId, handleFilmCardClick} = props;
+  const dispatch = useDispatch();
   const [state, setState] = useState({
     activeItem: {
       [filmStates.OVERVIEW]: true,
@@ -21,8 +23,8 @@ function FilmScreen(props) {
   });
 
   const onLoadData = () => {
-    loadSimilarMovies(pickedId);
-    loadComments(pickedId);
+    dispatch(fetchSimilarMoviesList(pickedId));
+    dispatch(fetchComments(pickedId));
     setState({activeItem: {
       [filmStates.OVERVIEW]: true,
     }});
@@ -30,7 +32,7 @@ function FilmScreen(props) {
 
   return (
     <div onLoad={onLoadData}>
-      {originalMovies.filter((movie) => movie.id === pickedId).map((movie) => (
+      {movies.filter((movie) => movie.id === pickedId).map((movie) => (
         <React.Fragment key={movie.id}>
           <section className="film-card film-card--full" style={{backgroundColor: movie.backgroundColor}}>
             <div className="film-card__hero">
@@ -69,7 +71,6 @@ function FilmScreen(props) {
           </section>
           <div className="page-content">
             <CatalogLikeThis
-              getIdMovie={getIdMovie}
               handleFilmCardClick={handleFilmCardClick}
             />
             <footer className="page-footer">
@@ -83,27 +84,15 @@ function FilmScreen(props) {
 }
 
 FilmScreen.propTypes = {
-  originalMovies: PropTypes.array.isRequired,
+  movies: PropTypes.array.isRequired,
   pickedId: PropTypes.number,
-  getIdMovie: PropTypes.func.isRequired,
-  loadComments: PropTypes.func.isRequired,
-  loadSimilarMovies: PropTypes.func.isRequired,
   handleFilmCardClick: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  originalMovies: state.originalMovies,
+  movies: state.movies,
   pickedId: state.pickedId,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  loadSimilarMovies(id) {
-    dispatch(fetchSimilarMoviesList(id));
-  },
-  loadComments(id) {
-    dispatch(fetchComments(id));
-  },
-});
-
 export {FilmScreen};
-export default connect(mapStateToProps, mapDispatchToProps)(FilmScreen);
+export default connect(mapStateToProps, null)(FilmScreen);

@@ -1,3 +1,5 @@
+import {createAction} from '@reduxjs/toolkit';
+
 export const ActionType = {
   SLICE_LIST_MOVIES: 'sliceListMovies',
   FILTER_LIST_MOVIES: 'filterListMovies',
@@ -14,56 +16,43 @@ export const ActionType = {
   HANDLE_ERRORS: 'handleErrors',
 };
 
-export const ActionCreator = {
-  loadPromo: (promo) => ({
-    type: ActionType.LOAD_PROMO,
-    promo: promo,
-  }),
-  loadMovies: (movies) => ({
-    type: ActionType.LOAD_MOVIES,
-    originalMovies: movies,
-    filtredMovies: movies.map((movie) => movie.id),
-  }),
-  loadSimilarMovies: (similarMovies) => ({
-    type: ActionType.LOAD_SIMILAR,
-    similarMovies: similarMovies,
-  }),
-  loadComments: (comments) => ({
-    type: ActionType.LOAD_COMMENTS,
-    comments: comments,
-  }),
-  sliceListMovies: (moviesCountForRender) => ({
-    type: ActionType.SLICE_LIST_MOVIES,
-    moviesCountForRender: moviesCountForRender,
-  }),
-  filterListMovies: (genre, originalMovies) => ({
-    type: ActionType.FILTER_LIST_MOVIES,
-    genre: genre,
-    filtredMovies: originalMovies.filter((movie) => movie.genre === genre).map((movie) => movie.id),
-  }),
-  resetState: () => ({
-    type: ActionType.RESET_STATE,
-  }),
-  requireAuthorization: (status) => ({
-    type: ActionType.REQUIRED_AUTHORIZATION,
-    payload: status,
-  }),
-  login: () => ({
-    type: ActionType.LOGIN,
-  }),
-  logout: () => ({
-    type: ActionType.LOGOUT,
-  }),
-  redirectToRoute: (url) => ({
-    type: ActionType.REDIRECT_TO_ROUTE,
-    payload: url,
-  }),
-  getIdMovie: (pickedId) => ({
-    type: ActionType.GET_ID_MOVIE,
-    pickedId: pickedId,
-  }),
-  handleErrors: (error) => ({
-    type: ActionType.HANDLE_ERRORS,
-    payload: error,
-  }),
-};
+export const loadPromo = createAction(ActionType.LOAD_PROMO, (promo) => ({
+  payload: promo,
+}));
+
+export const loadMovies = createAction(ActionType.LOAD_MOVIES, (movies) => ({
+  payload: movies,
+}));
+
+export const sliceListMovies = createAction(ActionType.SLICE_LIST_MOVIES, (moviesCountForRender) => ({
+  payload: moviesCountForRender,
+}));
+
+export const filterListMovies = createAction(ActionType.FILTER_LIST_MOVIES, (genre) => ({
+  payload: genre,
+}));
+
+export const getIdMovie = createAction(ActionType.GET_ID_MOVIE, (pickedId) => ({
+  payload: pickedId,
+}));
+
+export const loadSimilarMovies = createAction(ActionType.LOAD_SIMILAR, (similarMovies) => ({
+  payload: similarMovies,
+}));
+
+export const loadComments = createAction(ActionType.LOAD_COMMENTS, (comments) => ({
+  payload: comments,
+}));
+
+export const resetState = createAction(ActionType.RESET_STATE);
+
+export const requireAuthorization = createAction(ActionType.REQUIRED_AUTHORIZATION, (status) => ({
+  payload: status,
+}));
+
+
+export const redirectToRoute = createAction(ActionType.REDIRECT_TO_ROUTE, (url) => ({
+  payload: url,
+}));
+
+export const logout = createAction(ActionType.LOGOUT);
