@@ -1,15 +1,17 @@
 import React from 'react';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
 import {filterListMovies, resetState} from '../../store/action';
 import classnames from 'classnames';
 import {DEFAULT_GENRE} from '../../const';
+import {getMovies} from '../../store/movies-data/selectors';
+import {getGenre} from '../../store/movies-operations/selectors';
 
-function GenreList(props) {
-  const {activeLi, movies} = props;
+function GenreList() {
   const dispatch = useDispatch();
+
+  const movies = useSelector(getMovies);
+  const activeGenre = useSelector(getGenre);
   const genreList = movies.map((movie) => movie.genre);
 
   return (
@@ -17,11 +19,11 @@ function GenreList(props) {
       {[DEFAULT_GENRE, ...new Set(genreList)].slice(0, 10).map((genre) => (
         <React.Fragment key={genre}>
           <li
-            className={classnames({'catalog__genres-item':true, 'catalog__genres-item--active': genre === activeLi})}
+            className={classnames({'catalog__genres-item':true, 'catalog__genres-item--active': genre === activeGenre})}
             onClick={() => {
               genre === DEFAULT_GENRE
                 ? dispatch(resetState())
-                : dispatch(filterListMovies(genre, movies));
+                : dispatch(filterListMovies(genre));
             }}
           >
             <Link to="/" className="catalog__genres-link">{genre}</Link>
@@ -31,15 +33,4 @@ function GenreList(props) {
   );
 }
 
-GenreList.propTypes = {
-  movies: PropTypes.array.isRequired,
-  activeLi: PropTypes.string.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  movies: state.movies,
-  activeLi: state.genre,
-});
-
-export {GenreList};
-export default connect(mapStateToProps, null)(GenreList);
+export default GenreList;

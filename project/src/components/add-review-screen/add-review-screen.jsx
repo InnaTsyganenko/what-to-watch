@@ -1,14 +1,16 @@
 import React, {useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
 import Logo from '../logo/logo';
 import UserBlock from '../user-block/user-block';
 import Rating from '../rating/rating';
+import {LightenDarkenColor} from '../../utils';
 import {logoClassName, MIN_LENGTH_COMMENT, MAX_LENGTH_COMMENT} from '../../const';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
 import {pushComment} from '../../store/api-actions';
-function AddReviewScreen(props) {
-  const {pickedId, movies, sendComment} = props;
+import {getPickedId} from '../../store/movies-operations/selectors';
+import {getMovies} from '../../store/movies-data/selectors';
+
+function AddReviewScreen() {
 
   const [state, setState] = useState({
     filmId: '',
@@ -21,8 +23,12 @@ function AddReviewScreen(props) {
 
   const [commentStatus, setStatus] = useState(false);
 
-  function handleStatusChange() {
-    setStatus(true);
+  const dispatch = useDispatch();
+  const movies = useSelector(getMovies);
+  const pickedId = useSelector(getPickedId);
+
+  function handleStatusChange(bool) {
+    setStatus(bool);
   }
 
   function handleTextareaChange(event) {
@@ -32,11 +38,6 @@ function AddReviewScreen(props) {
         comment: event.target.value,
       });
     }
-  }
-
-  function LightenDarkenColor(color, amount) {
-    return (`#${color.replace(/^#/, '').replace(/../g, (col) =>
-      (`0${Math.min(255, Math.max(0, parseInt(col, 16) + amount)).toString(16)}`).substr(-2))}`);
   }
 
   return (
@@ -73,8 +74,9 @@ function AddReviewScreen(props) {
                 className="add-review__form"
                 onSubmit={(evt) => {
                   evt.preventDefault();
-                  handleStatusChange();
-                  sendComment(pickedId, state.rating, state.comment);
+                  handleStatusChange(true);
+                  dispatch(pushComment(pickedId, state.rating, state.comment));
+                  handleStatusChange(false);
                 }}
               >
                 <fieldset
@@ -84,7 +86,7 @@ function AddReviewScreen(props) {
                   <div className="rating">
                     <Rating  state={state} setState={setState}/>
                   </div>
-                  <div className="add-review__text" style={{backgroundColor: LightenDarkenColor(movie.backgroundColor, 25)}}>
+                  <div className="add-review__text" style={{backgroundColor: LightenDarkenColor(movie.backgroundColor, 45)}}>
                     <textarea
                       className="add-review__textarea"
                       name="comment" id="review-text"
@@ -113,23 +115,4 @@ function AddReviewScreen(props) {
   );
 }
 
-AddReviewScreen.propTypes = {
-  pickedId: PropTypes.number.isRequired,
-  movies: PropTypes.array.isRequired,
-  sendComment: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  pickedId: state.pickedId,
-  authorizationStatus: state.authorizationStatus,
-  movies: state.movies,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  sendComment(id, rating, commentText) {
-    dispatch(pushComment(id, rating, commentText));
-  },
-});
-
-export {AddReviewScreen};
-export default connect(mapStateToProps, mapDispatchToProps)(AddReviewScreen);
+export default AddReviewScreen;

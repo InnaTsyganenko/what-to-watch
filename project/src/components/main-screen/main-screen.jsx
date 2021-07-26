@@ -1,6 +1,6 @@
 import React from 'react';
+import {useSelector} from 'react-redux';
 import {useLocation} from 'react-router-dom';
-import PropTypes from 'prop-types';
 import Logo from '../logo/logo';
 import Copyright from '../copyright/copyright';
 import UserBlock from '../user-block/user-block';
@@ -9,11 +9,14 @@ import MoviesList from '../movies-list/movies-list';
 import FilmCardButtons from '../film-card-buttons/film-card-buttons';
 import ShowMoreButton from '../show-more-button/show-more-button';
 import {logoClassName} from '../../const';
-import {connect} from 'react-redux';
+import {getPromo} from '../../store/movies-data/selectors';
+import {getGenre} from '../../store/movies-operations/selectors';
 
-function MainScreen(props) {
-  const {promo, genre, handleFilmCardClick} = props;
+function MainScreen() {
   const location = useLocation();
+
+  const promo = useSelector(getPromo);
+  const genre = useSelector(getGenre);
 
   return (
     <React.Fragment>
@@ -37,7 +40,9 @@ function MainScreen(props) {
                 <span className="film-card__genre">{promo.genre}</span>
                 <span className="film-card__year">{promo.released}</span>
               </p>
-              <FilmCardButtons location={location.pathname}/>
+              <FilmCardButtons
+                location={location.pathname}
+              />
             </div>
           </div>
         </div>
@@ -48,7 +53,6 @@ function MainScreen(props) {
           <GenreList />
           <MoviesList
             genre={genre}
-            handleFilmCardClick={handleFilmCardClick}
           />
           <ShowMoreButton />
         </section>
@@ -60,17 +64,4 @@ function MainScreen(props) {
     </React.Fragment>
   );
 }
-
-MainScreen.propTypes = {
-  promo: PropTypes.object.isRequired,
-  genre: PropTypes.string.isRequired,
-  handleFilmCardClick: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  genre: state.genre,
-  promo: state.promo,
-});
-
-export {MoviesList};
-export default connect(mapStateToProps, null)(MainScreen);
+export default MainScreen;

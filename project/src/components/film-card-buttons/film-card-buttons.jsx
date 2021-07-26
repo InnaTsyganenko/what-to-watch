@@ -1,15 +1,21 @@
 import React from 'react';
+import {useSelector} from 'react-redux';
 import {AppRoute} from '../../const';
-import {useHistory, Link} from 'react-router-dom';
+import browserHistory from '../../browser-history';
+import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
 import {AuthorizationStatus} from '../../const';
+import {getAuthorizationStatus} from '../../store/user/selectors';
+import {getPickedId} from '../../store/movies-operations/selectors';
 
 function FilmCardButtons(props) {
-  const {location, pickedId, authorizationStatus} = props;
+  const {location} = props;
 
-  const history = useHistory();
-  const handlePlayButtonClick = () => history.push(AppRoute.PLAYER);
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const pickedId = useSelector(getPickedId);
+
+  const handlePlayButtonClick = () => browserHistory.push(`${AppRoute.PLAYER}${pickedId}`);
+
   const handleMyListButtonClick = () => '';
 
   return (
@@ -44,14 +50,7 @@ function FilmCardButtons(props) {
 }
 
 FilmCardButtons.propTypes = {
-  authorizationStatus: PropTypes.string.isRequired,
   location: PropTypes.any,
-  pickedId: PropTypes.number.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  pickedId: state.pickedId,
-  authorizationStatus: state.authorizationStatus,
-});
-
-export default connect(mapStateToProps)(FilmCardButtons);
+export default FilmCardButtons;

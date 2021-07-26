@@ -1,8 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-function FilmPageReviews(props) {
-  const {comments} = props;
+import {useSelector} from 'react-redux';
+import {getComments} from '../../store/movies-data/selectors';
+
+function FilmPageReviews() {
+
+  const comments = useSelector(getComments);
   const humanizedDate = { month: 'long', day: 'numeric', year: 'numeric' };
 
   return (
@@ -41,12 +43,4 @@ function FilmPageReviews(props) {
   );
 }
 
-FilmPageReviews.propTypes = {
-  comments: PropTypes.array.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  comments: state.comments,
-});
-
-export default connect(mapStateToProps)(FilmPageReviews);
+export default FilmPageReviews;

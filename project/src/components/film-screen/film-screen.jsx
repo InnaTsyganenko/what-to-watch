@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import {useDispatch} from 'react-redux';
-import PropTypes from 'prop-types';
+import {useDispatch, useSelector} from 'react-redux';
 import Logo from '../logo/logo';
 import UserBlock from '../user-block/user-block';
 import FilmCardButtons from '../film-card-buttons/film-card-buttons';
@@ -11,11 +10,16 @@ import FilmPageDetails from '../film-page-details/film-page-details';
 import FilmPageReviews from '../film-page-reviews/film-page-reviews';
 import CatalogLikeThis from '../catalog-like-this/catalog-like-this';
 import Copyright from '../copyright/copyright';
-import {connect} from 'react-redux';
 import {fetchSimilarMoviesList, fetchComments} from '../../store/api-actions';
-function FilmScreen(props) {
-  const {movies, pickedId, handleFilmCardClick} = props;
+import {getMovies} from '../../store/movies-data/selectors';
+import {getPickedId} from '../../store/movies-operations/selectors';
+
+function FilmScreen() {
   const dispatch = useDispatch();
+
+  const movies = useSelector(getMovies);
+  const pickedId = useSelector(getPickedId);
+
   const [state, setState] = useState({
     activeItem: {
       [filmStates.OVERVIEW]: true,
@@ -70,9 +74,7 @@ function FilmScreen(props) {
             </div>
           </section>
           <div className="page-content">
-            <CatalogLikeThis
-              handleFilmCardClick={handleFilmCardClick}
-            />
+            <CatalogLikeThis />
             <footer className="page-footer">
               <Logo logoClassName={logoClassName.FOOTER_LOGO} />
               <Copyright />
@@ -83,16 +85,4 @@ function FilmScreen(props) {
   );
 }
 
-FilmScreen.propTypes = {
-  movies: PropTypes.array.isRequired,
-  pickedId: PropTypes.number,
-  handleFilmCardClick: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  movies: state.movies,
-  pickedId: state.pickedId,
-});
-
-export {FilmScreen};
-export default connect(mapStateToProps, null)(FilmScreen);
+export default FilmScreen;

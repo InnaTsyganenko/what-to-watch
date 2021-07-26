@@ -1,5 +1,5 @@
 import React from 'react';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {Switch, Route, Router as BrowserRouter} from 'react-router-dom';
@@ -14,27 +14,33 @@ import PlayerScreen from '../player-screen/player-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import LoadingScreen from '../loading-screen/loading-screen';
 import browserHistory from '../../browser-history';
-import {resetState} from '../../store/action';
+import {resetState, resetPickedId} from '../../store/action';
+import {getAuthorizationStatus} from '../../store/user/selectors';
+import {getPromoId} from '../../store/movies-data/selectors';
 function App(props) {
   const {
-    authorizationStatus,
     isDataLoaded,
     genre,
     moviesCountForRender,
     pickedId} = props;
 
   const dispatch = useDispatch();
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const promoId = useSelector(getPromoId);
 
-  const isCheckedAuth = (authStatus) =>
+  const isCheckedAuthUnknown = (authStatus) =>
     authStatus === AuthorizationStatus.UNKNOWN;
 
-  if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
+  if (isCheckedAuthUnknown(authorizationStatus) || !isDataLoaded) {
     return (
       <LoadingScreen />
     );
   }
 
   browserHistory.listen((location) =>  {
+    if (location.pathname === AppRoute.ROOT) {
+      dispatch(resetPickedId(promoId));
+    }
     if ((genre !== DEFAULT_GENRE
       || moviesCountForRender !== FILMS_RENDER_STEP)
       && location.pathname !== AppRoute.ROOT) {
@@ -42,15 +48,11 @@ function App(props) {
     }
   });
 
-  const handleFilmCardClick = (id) => browserHistory.push(`${AppRoute.FILM}${id}`);
-
   return (
     <BrowserRouter history={browserHistory}>
       <Switch>
         <Route exact path={AppRoute.ROOT}>
-          <MainScreen
-            handleFilmCardClick={handleFilmCardClick}
-          />
+          <MainScreen />
         </Route>
         <Route exact path={AppRoute.LOGIN} >
           <LoginScreen />
@@ -58,13 +60,11 @@ function App(props) {
         <PrivateRoute
           exact
           path={AppRoute.MY_LIST}
-          render={() => <MyListScreen  />}
+          render={() => <MyListScreen />}
         >
         </PrivateRoute>
         <Route exact path={`${AppRoute.FILM}${pickedId}`} >
-          <FilmScreen
-            handleFilmCardClick={handleFilmCardClick}
-          />
+          <FilmScreen />
         </Route>
         <PrivateRoute
           exact
@@ -72,7 +72,7 @@ function App(props) {
           render={() => <AddReviewScreen />}
         >
         </PrivateRoute>
-        <Route exact path={AppRoute.PLAYER} >
+        <Route exact path={`${AppRoute.PLAYER}${pickedId}`} >
           <PlayerScreen />
         </Route>
         <Route >
@@ -84,19 +84,18 @@ function App(props) {
 }
 
 App.propTypes = {
-  authorizationStatus: PropTypes.string.isRequired,
   isDataLoaded: PropTypes.bool.isRequired,
   moviesCountForRender: PropTypes.number.isRequired,
   pickedId: PropTypes.number,
   genre: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  authorizationStatus: state.authorizationStatus,
-  isDataLoaded: state.isDataLoaded,
-  genre: state.genre,
-  moviesCountForRender: state.moviesCountForRender,
-  pickedId: state.pickedId,
+const mapStateToProps = ({DATA, MOVIES}) => ({
+  isDataLoaded: DATA.isDataLoaded,
+  genre: MOVIES.genre,
+  moviesCountForRender: MOVIES.moviesCountForRender,
+  pickedId: MOVIES.pickedId,
 });
 
+export {App};
 export default connect(mapStateToProps, null)(App);

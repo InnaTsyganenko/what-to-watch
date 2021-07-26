@@ -4,7 +4,7 @@ export const AppRoute = {
   MY_LIST: '/mylist',
   FILM: '/films/',
   ADD_REVIEW: '/review',
-  PLAYER: '/player/:id',
+  PLAYER: '/player/',
 };
 
 export const logoClassName = {

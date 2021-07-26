@@ -1,38 +1,31 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import {useSelector} from 'react-redux';
 import SmallFilmCard from '../small-film-card/small-film-card';
-import {connect} from 'react-redux';
+import {getMovies} from '../../store/movies-data/selectors';
+import {getFiltredMovies, getMoviesCountForRender, getGenre} from '../../store/movies-operations/selectors';
+import {DEFAULT_GENRE} from '../../const';
 
-function MoviesList(props) {
-  const {movies, moviesCountForRender, handleFilmCardClick, filtredMovies} = props;
+function MoviesList() {
+
+  const movies = useSelector(getMovies);
+  const genre = useSelector(getGenre);
+  const moviesCountForRender = useSelector(getMoviesCountForRender);
+  const filtredMovies = useSelector(getFiltredMovies);
 
   return (
     <div className="catalog__films-list">
-      {movies
-        .filter(({id}) => filtredMovies.includes(id))
+      {(genre === DEFAULT_GENRE
+        ? movies
+        : filtredMovies)
         .slice(0, moviesCountForRender)
         .map((movie) => (
           <React.Fragment key={movie.id}>
             <SmallFilmCard
               movie={movie}
-              handleFilmCardClick={handleFilmCardClick}
             />
           </React.Fragment>))}
     </div>
   );
 }
 
-MoviesList.propTypes = {
-  movies: PropTypes.array.isRequired,
-  filtredMovies: PropTypes.array.isRequired,
-  moviesCountForRender: PropTypes.number.isRequired,
-  handleFilmCardClick: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  movies: state.movies,
-  filtredMovies: state.filtredMovies,
-  moviesCountForRender: state.moviesCountForRender,
-});
-
-export default connect(mapStateToProps)(MoviesList);
+export default MoviesList;
