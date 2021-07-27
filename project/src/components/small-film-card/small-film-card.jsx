@@ -1,12 +1,15 @@
 import React from 'react';
+import browserHistory from '../../browser-history';
 import {useDispatch} from 'react-redux';
 import PropTypes from 'prop-types';
 import PreviewPlayer from '../preview-player/preview-player';
 import {getIdMovie} from '../../store/action';
+import {AppRoute} from '../../const';
 
 function SmallFilmCard(props) {
-  const {movie, handleFilmCardClick} = props;
+  const {movie} = props;
   const dispatch = useDispatch();
+  const handleFilmCardClick = (id) => browserHistory.push(`${AppRoute.FILM}${id}`);
 
   return (
     <article className="small-film-card catalog__films-card"
@@ -29,7 +32,6 @@ function SmallFilmCard(props) {
 
 SmallFilmCard.propTypes = {
   movie: PropTypes.object.isRequired,
-  handleFilmCardClick: PropTypes.func.isRequired,
 };
 
 export default SmallFilmCard;

@@ -1,11 +1,13 @@
 import React from 'react';
+import {useSelector} from 'react-redux';
+import {getPickedId} from '../../store/movies-operations/selectors';
 import {Link} from 'react-router-dom';
 import {filmStates} from '../../const';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-
 function FilmCardTabs(props) {
-  const {state, setState, pickedId} = props;
+  const {state, setState} = props;
+
+  const pickedId = useSelector(getPickedId);
 
   function toggleActiveItem(activeState) {
     setState({
@@ -36,11 +38,6 @@ function FilmCardTabs(props) {
 FilmCardTabs.propTypes = {
   state: PropTypes.any,
   setState: PropTypes.any,
-  pickedId: PropTypes.number.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  pickedId: state.pickedId,
-});
-
-export default connect(mapStateToProps)(FilmCardTabs);
+export default FilmCardTabs;

@@ -1,10 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
+import {getPickedId} from '../../store/movies-operations/selectors';
+import {getSimilarMovies} from '../../store/movies-data/selectors';
 import SmallFilmCard from '../small-film-card/small-film-card';
 
-function CatalogLikeThis(props) {
-  const {similarMovies, handleFilmCardClick, pickedId} = props;
+function CatalogLikeThis() {
+
+  const similarMovies = useSelector(getSimilarMovies);
+  const pickedId = useSelector(getPickedId);
 
   return (
     <section className="catalog catalog--like-this">
@@ -14,7 +17,6 @@ function CatalogLikeThis(props) {
           <React.Fragment key={movie.id}>
             <SmallFilmCard
               movie={movie}
-              handleFilmCardClick={handleFilmCardClick}
             />
           </React.Fragment>))}
       </div>
@@ -22,15 +24,4 @@ function CatalogLikeThis(props) {
   );
 }
 
-CatalogLikeThis.propTypes = {
-  similarMovies: PropTypes.array,
-  handleFilmCardClick: PropTypes.func.isRequired,
-  pickedId: PropTypes.number.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  similarMovies: state.similarMovies,
-  pickedId: state.pickedId,
-});
-
-export default connect(mapStateToProps)(CatalogLikeThis);
+export default CatalogLikeThis;

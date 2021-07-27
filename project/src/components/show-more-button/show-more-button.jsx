@@ -1,22 +1,29 @@
 import React from 'react';
-import {useDispatch} from 'react-redux';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {sliceListMovies} from '../../store/action';
-import {FILMS_RENDER_STEP} from '../../const';
+import {DEFAULT_GENRE} from '../../const';
+import {getMoviesCountForRender, getFiltredMovies, getGenre} from '../../store/movies-operations/selectors';
+import {getMovies} from '../../store/movies-data/selectors';
 
-function ShowMoreButton(props) {
-  const {moviesCountForRender, filtredMovies} = props;
+function ShowMoreButton() {
   const dispatch = useDispatch();
-  const moviesCountForRenderWithStep = moviesCountForRender + FILMS_RENDER_STEP;
+
+  const movies = useSelector(getMovies);
+  const moviesCountForRender = useSelector(getMoviesCountForRender);
+  const genre = useSelector(getGenre);
+  const filtredMovies = useSelector(getFiltredMovies);
 
   return (
     <div className="catalog__more">
-      {(filtredMovies.length <= moviesCountForRender)
+      {(genre === DEFAULT_GENRE
+        ? movies
+        : filtredMovies).length <= moviesCountForRender
         ? null
         :
         <button className="catalog__button" type="button"
-          onClick={() => dispatch(sliceListMovies(moviesCountForRenderWithStep, filtredMovies.length))}
+          onClick={() => dispatch(sliceListMovies(moviesCountForRender, (genre === DEFAULT_GENRE
+            ? movies
+            : filtredMovies).length))}
         >
           Show more
         </button>}
@@ -24,15 +31,4 @@ function ShowMoreButton(props) {
   );
 }
 
-ShowMoreButton.propTypes = {
-  moviesCountForRender: PropTypes.number.isRequired,
-  filtredMovies: PropTypes.array.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  moviesCountForRender: state.moviesCountForRender,
-  filtredMovies: state.filtredMovies,
-});
-
-export {ShowMoreButton};
-export default connect(mapStateToProps, null)(ShowMoreButton);
+export default ShowMoreButton;

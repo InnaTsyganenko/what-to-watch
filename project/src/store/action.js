@@ -14,6 +14,7 @@ export const ActionType = {
   REDIRECT_TO_ROUTE: 'redirectToRoute',
   GET_ID_MOVIE: 'getIdMovie',
   HANDLE_ERRORS: 'handleErrors',
+  RESET_ID: 'resetPickedId',
 };
 
 export const loadPromo = createAction(ActionType.LOAD_PROMO, (promo) => ({
@@ -45,6 +46,10 @@ export const loadComments = createAction(ActionType.LOAD_COMMENTS, (comments) =>
 }));
 
 export const resetState = createAction(ActionType.RESET_STATE);
+
+export const resetPickedId = createAction(ActionType.RESET_ID, (id) => ({
+  payload: id,
+}));
 
 export const requireAuthorization = createAction(ActionType.REQUIRED_AUTHORIZATION, (status) => ({
   payload: status,

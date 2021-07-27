@@ -1,16 +1,20 @@
 import React from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 import {AppRoute} from '../../const';
 import {Link} from 'react-router-dom';
 import {AuthorizationStatus} from '../../const';
-import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
 import {logout} from '../../store/api-actions';
+import {getAuthorizationStatus} from '../../store/user/selectors';
 
-function UserBlock(props) {
-  const {authorizationStatus, logoutGame} = props;
+function UserBlock() {
+  const dispatch = useDispatch();
+  const authorizationStatus = useSelector(getAuthorizationStatus);
   const history = useHistory();
   const handleAvatarClick = () => history.push(AppRoute.MY_LIST);
+
+  const isCheckedAuth = () =>
+    authorizationStatus === AuthorizationStatus.AUTH;
 
   return (
     <ul className="user-block">
@@ -24,14 +28,14 @@ function UserBlock(props) {
       <li className="user-block__item">
         <Link className="user-block__link"
           onClick={(evt) => {
-            if (authorizationStatus === AuthorizationStatus.AUTH) {
+            if (isCheckedAuth()) {
               evt.preventDefault();
-              logoutGame();
+              dispatch(logout());
             }
           }}
           to={AppRoute.LOGIN}
         >
-          {authorizationStatus === AuthorizationStatus.AUTH
+          {(isCheckedAuth())
             ? 'Sign Out'
             : 'Sign In'}
         </Link>
@@ -40,20 +44,5 @@ function UserBlock(props) {
   );
 }
 
-UserBlock.propTypes = {
-  authorizationStatus: PropTypes.string.isRequired,
-  logoutGame: PropTypes.func.isRequired,
-};
 
-const mapStateToProps = (state) => ({
-  authorizationStatus: state.authorizationStatus,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  logoutGame() {
-    dispatch(logout());
-  },
-});
-
-export {UserBlock};
-export default connect(mapStateToProps, mapDispatchToProps)(UserBlock);
+export default UserBlock;
