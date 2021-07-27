@@ -73,7 +73,7 @@ function App(props) {
         >
         </PrivateRoute>
         <Route exact path={`${AppRoute.PLAYER}${pickedId}`} >
-          <PlayerScreen />
+          <PlayerScreen autoPlay />
         </Route>
         <Route >
           <NotFoundScreen />
