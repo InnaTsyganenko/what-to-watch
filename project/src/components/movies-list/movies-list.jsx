@@ -14,7 +14,7 @@ function MoviesList() {
 
   return (
     <div className="catalog__films-list">
-      {(genre === DEFAULT_GENRE
+      {((genre === DEFAULT_GENRE)
         ? movies
         : filtredMovies)
         .slice(0, moviesCountForRender)

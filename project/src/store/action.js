@@ -15,6 +15,9 @@ export const ActionType = {
   GET_ID_MOVIE: 'getIdMovie',
   HANDLE_ERRORS: 'handleErrors',
   RESET_ID: 'resetPickedId',
+  GET_MY_LIST: 'getMyList',
+  ADD_MOVIE_IN_MY_LIST: 'addMovieInMyList',
+  DELETE_MOVIE_IN_MY_LIST: 'deleteMovieFromMyList',
 };
 
 export const loadPromo = createAction(ActionType.LOAD_PROMO, (promo) => ({
@@ -58,6 +61,16 @@ export const requireAuthorization = createAction(ActionType.REQUIRED_AUTHORIZATI
 
 export const redirectToRoute = createAction(ActionType.REDIRECT_TO_ROUTE, (url) => ({
   payload: url,
+}));
+
+export const getMyList = createAction(ActionType.GET_MY_LIST);
+
+export const addMovieInMyList = createAction(ActionType.ADD_MOVIE_IN_MY_LIST, (newMovie) => ({
+  payload: newMovie,
+}));
+
+export const deleteMovieFromMyList = createAction(ActionType.DELETE_MOVIE_IN_MY_LIST, (movie) => ({
+  payload: movie,
 }));
 
 export const logout = createAction(ActionType.LOGOUT);
