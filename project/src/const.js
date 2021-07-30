@@ -31,8 +31,8 @@ export const AuthorizationStatus = {
 };
 
 export const APIRoute = {
-  MOVIES: '/films',
   PROMO: '/promo',
+  MOVIES: '/films',
   FAVORITE: '/favorite',
   LOGIN: '/login',
   LOGOUT: '/logout',

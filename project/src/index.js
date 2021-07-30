@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
+import {Router as BrowserRouter} from 'react-router-dom';
 import {createStore, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 import {createAPI} from './services/api';
@@ -13,6 +14,7 @@ import {AuthorizationStatus} from './const';
 import {redirect} from './store/middlewares/redirect';
 import {PersistGate} from 'redux-persist/integration/react';
 import {persistStore} from 'redux-persist';
+import browserHistory from './browser-history';
 
 const api = createAPI(
   // eslint-disable-next-line no-use-before-define
@@ -37,7 +39,9 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <App />
+        <BrowserRouter history={browserHistory}>
+          <App />
+        </BrowserRouter>
       </PersistGate>
     </Provider>
   </React.StrictMode>,

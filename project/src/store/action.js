@@ -1,8 +1,8 @@
 import {createAction} from '@reduxjs/toolkit';
 
 export const ActionType = {
-  SLICE_LIST_MOVIES: 'sliceListMovies',
-  FILTER_LIST_MOVIES: 'filterListMovies',
+  GET_COUNT_MOVIES_FOR_SLICE: 'getCountMoviesForSlice',
+  GET_GENRE: 'getGenreForFilterMovies',
   RESET_STATE: 'resetState',
   LOAD_PROMO: 'data/loadPromo',
   LOAD_MOVIES: 'data/loadMovies',
@@ -17,7 +17,7 @@ export const ActionType = {
   RESET_ID: 'resetPickedId',
   GET_MY_LIST: 'getMyList',
   ADD_MOVIE_IN_MY_LIST: 'addMovieInMyList',
-  DELETE_MOVIE_IN_MY_LIST: 'deleteMovieFromMyList',
+  DELETE_MOVIE_FROM_MY_LIST: 'deleteMovieFromMyList',
 };
 
 export const loadPromo = createAction(ActionType.LOAD_PROMO, (promo) => ({
@@ -28,11 +28,11 @@ export const loadMovies = createAction(ActionType.LOAD_MOVIES, (movies) => ({
   payload: movies,
 }));
 
-export const sliceListMovies = createAction(ActionType.SLICE_LIST_MOVIES, (moviesCountForRender) => ({
+export const getCountMoviesForSlice = createAction(ActionType.GET_COUNT_MOVIES_FOR_SLICE, (moviesCountForRender) => ({
   payload: moviesCountForRender,
 }));
 
-export const filterListMovies = createAction(ActionType.FILTER_LIST_MOVIES, (genre) => ({
+export const getGenreForFilterMovies = createAction(ActionType.GET_GENRE, (genre) => ({
   payload: genre,
 }));
 
@@ -69,7 +69,7 @@ export const addMovieInMyList = createAction(ActionType.ADD_MOVIE_IN_MY_LIST, (n
   payload: newMovie,
 }));
 
-export const deleteMovieFromMyList = createAction(ActionType.DELETE_MOVIE_IN_MY_LIST, (movie) => ({
+export const deleteMovieFromMyList = createAction(ActionType.DELETE_MOVIE_FROM_MY_LIST, (movie) => ({
   payload: movie,
 }));
 

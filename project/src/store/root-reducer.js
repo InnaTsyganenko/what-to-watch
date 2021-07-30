@@ -14,7 +14,7 @@ export const NameSpace = {
 const rootPersistConfig = {
   key: 'root',
   storage,
-  blacklist: ['error', 'MOVIES', 'USER'],
+  blacklist: ['error', 'MOVIES'],
 };
 
 const moviesPersistConfig = {

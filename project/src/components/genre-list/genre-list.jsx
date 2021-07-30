@@ -1,7 +1,7 @@
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {filterListMovies, resetState} from '../../store/action';
+import {getGenreForFilterMovies, resetState} from '../../store/action';
 import classnames from 'classnames';
 import {DEFAULT_GENRE} from '../../const';
 import {getMovies} from '../../store/movies-data/selectors';
@@ -23,7 +23,7 @@ function GenreList() {
             onClick={() => {
               genre === DEFAULT_GENRE
                 ? dispatch(resetState())
-                : dispatch(filterListMovies(genre));
+                : dispatch(getGenreForFilterMovies(genre));
             }}
           >
             <Link to="/" className="catalog__genres-link">{genre}</Link>
