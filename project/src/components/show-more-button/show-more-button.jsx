@@ -1,6 +1,6 @@
 import React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {sliceListMovies} from '../../store/action';
+import {getCountMoviesForSlice} from '../../store/action';
 import {DEFAULT_GENRE} from '../../const';
 import {getMoviesCountForRender, getFiltredMovies, getGenre} from '../../store/movies-operations/selectors';
 import {getMovies} from '../../store/movies-data/selectors';
@@ -21,7 +21,7 @@ function ShowMoreButton() {
         ? null
         :
         <button className="catalog__button" type="button"
-          onClick={() => dispatch(sliceListMovies(moviesCountForRender, (genre === DEFAULT_GENRE
+          onClick={() => dispatch(getCountMoviesForSlice(moviesCountForRender, (genre === DEFAULT_GENRE
             ? movies
             : filtredMovies).length))}
         >

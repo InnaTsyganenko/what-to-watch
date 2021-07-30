@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import Logo from '../logo/logo';
 import {logoClassName} from '../../const';
 import Copyright from '../copyright/copyright';
@@ -16,7 +17,7 @@ function NotFoundScreen() {
             <Logo logoClassName={logoClassName.HEADER_LOGO} />
             <p>Oooops!</p>
             <h2>404. The page does not exist.</h2>
-            <h3>Go to <a href="/" style={{color: 'inherit'}}> main page</a>?</h3>
+            <h3>Go to <Link to="/" style={{color: 'inherit'}}> main page</Link>?</h3>
           </div>
         </header>
       </section>

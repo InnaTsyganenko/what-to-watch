@@ -84,9 +84,11 @@ function AddReviewScreen() {
                   disabled={commentStatus ? true : null}
                 >
                   <div className="rating">
-                    <Rating  state={state} setState={setState}/>
+                    <Rating state={state} setState={setState}/>
                   </div>
-                  <div className="add-review__text" style={{backgroundColor: LightenDarkenColor(movie.backgroundColor, 45)}}>
+                  <div className="add-review__text"
+                    style={{backgroundColor: LightenDarkenColor(movie.backgroundColor, 45)}}
+                  >
                     <textarea
                       className="add-review__textarea"
                       name="comment" id="review-text"

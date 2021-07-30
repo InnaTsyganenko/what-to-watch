@@ -3,10 +3,14 @@ import Spinner from '../spinner/spinner';
 
 function LoadingScreen() {
   return (
-    <div>
+    <div style={{height: '100%',
+      width: '100%',
+      backgroundImage: 'radial-gradient(circle farthest-corner at center, #939ba3 0%, #bdc2c7 100%)',
+    }}
+    >
       <p style={{position: 'fixed',
-        top: '30%',
-        left: '45%',
+        top: '35%',
+        left: 'calc(50% - 75px)',
         fontSize: '50px',
         color: '#9cfdc4',
         fontWeight: 'bold'}}
