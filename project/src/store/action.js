@@ -11,7 +11,6 @@ export const ActionType = {
   REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
   LOGIN: 'user/login',
   LOGOUT: 'user/logout',
-  REDIRECT_TO_ROUTE: 'redirectToRoute',
   GET_ID_MOVIE: 'getIdMovie',
   HANDLE_ERRORS: 'handleErrors',
   RESET_ID: 'resetPickedId',
@@ -56,11 +55,6 @@ export const resetPickedId = createAction(ActionType.RESET_ID, (id) => ({
 
 export const requireAuthorization = createAction(ActionType.REQUIRED_AUTHORIZATION, (status) => ({
   payload: status,
-}));
-
-
-export const redirectToRoute = createAction(ActionType.REDIRECT_TO_ROUTE, (url) => ({
-  payload: url,
 }));
 
 export const getMyList = createAction(ActionType.GET_MY_LIST);

@@ -4,7 +4,8 @@ import {getPickedId} from '../../store/movies-operations/selectors';
 import {Link} from 'react-router-dom';
 import {filmStates} from '../../const';
 import PropTypes from 'prop-types';
-function FilmCardTabs(props) {
+
+function FilmCardNav(props) {
   const {state, setState} = props;
 
   const pickedId = useSelector(getPickedId);
@@ -35,9 +36,9 @@ function FilmCardTabs(props) {
   );
 }
 
-FilmCardTabs.propTypes = {
+FilmCardNav.propTypes = {
   state: PropTypes.any,
   setState: PropTypes.any,
 };
 
-export default FilmCardTabs;
+export default FilmCardNav;

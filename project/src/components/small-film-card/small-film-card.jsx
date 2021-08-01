@@ -9,13 +9,15 @@ import {AppRoute} from '../../const';
 function SmallFilmCard(props) {
   const {movie} = props;
   const dispatch = useDispatch();
-  const handleFilmCardClick = (id) => browserHistory.push(`${AppRoute.FILM}${id}`);
+  const onFilmCardClick = (id) => browserHistory.push(`${AppRoute.FILM}${id}`);
 
   return (
-    <article className="small-film-card catalog__films-card"
+    <article
+      data-testid="article-film-card"
+      className="small-film-card catalog__films-card"
       onClick={() => {
         dispatch(getIdMovie(movie.id));
-        handleFilmCardClick(movie.id);
+        onFilmCardClick(movie.id);
       }}
     >
       <PreviewPlayer

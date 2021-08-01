@@ -34,6 +34,7 @@ function PreviewPlayer({movie, autoPlay, src}) {
 
   return (
     <div className="small-film-card__image"
+      data-testid="video-wrapper"
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
     >

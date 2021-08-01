@@ -2,18 +2,18 @@ import React from 'react';
 import {render} from '@testing-library/react';
 import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
-import Copyright from '../copyright/copyright';
+import Spinner from './spinner';
 
-describe('Component: Copyright', () => {
+describe('Component: Spinner', () => {
   it('should render correctly', () => {
     const history = createMemoryHistory();
     const {getByText} = render(
       <Router history={history}>
-        <Copyright />
+        <Spinner />
+        <span>Spinner component</span>
       </Router>,
     );
-    const element = getByText(/© 2019 What to watch Ltd./i);
 
-    expect(element).toBeInTheDocument();
+    expect(getByText(/Spinner component/i)).toBeInTheDocument();
   });
 });

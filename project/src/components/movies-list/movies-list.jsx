@@ -13,7 +13,7 @@ function MoviesList() {
   const filtredMovies = useSelector(getFiltredMovies);
 
   return (
-    <div className="catalog__films-list">
+    <div className="catalog__films-list" data-testid="film-card">
       {((genre === DEFAULT_GENRE)
         ? movies
         : filtredMovies)

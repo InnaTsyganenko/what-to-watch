@@ -1,7 +1,6 @@
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRoute} from '../../const';
-import browserHistory from '../../browser-history';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {AuthorizationStatus} from '../../const';
@@ -9,14 +8,12 @@ import {getAuthorizationStatus, getMyList} from '../../store/user/selectors';
 import {getPickedId} from '../../store/movies-operations/selectors';
 import {addMovieInMyList, deleteMovieFromMyList} from '../../store/action';
 function FilmCardButtons(props) {
-  const {location} = props;
+  const {location, onPlayButtonClick} = props;
   const dispatch = useDispatch();
 
   const authorizationStatus = useSelector(getAuthorizationStatus);
   const pickedId = useSelector(getPickedId);
   const myList = useSelector(getMyList);
-
-  const handlePlayButtonClick = () => browserHistory.push(`${AppRoute.PLAYER}${pickedId}`);
 
   const handleMyListButtonClick = () => {
     if (myList.includes(pickedId)) {
@@ -28,8 +25,8 @@ function FilmCardButtons(props) {
 
   return (
     <div className="film-card__buttons">
-      <button className="btn btn--play film-card__button" type="button"
-        onClick={handlePlayButtonClick}
+      <button className="btn btn--play film-card__button" type="button" data-testid="button-play"
+        onClick={onPlayButtonClick}
       >
         <svg viewBox="0 0 19 19" width="19" height="19">
           <use xlinkHref="#play-s"></use>
@@ -65,6 +62,7 @@ function FilmCardButtons(props) {
 
 FilmCardButtons.propTypes = {
   location: PropTypes.any,
+  onPlayButtonClick: PropTypes.func.isRequired,
 };
 
 export default FilmCardButtons;
