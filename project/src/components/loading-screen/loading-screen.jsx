@@ -5,7 +5,7 @@ function LoadingScreen() {
   return (
     <div style={{height: '100%',
       width: '100%',
-      backgroundImage: 'radial-gradient(circle farthest-corner at center, #939ba3 0%, #bdc2c7 100%)',
+      backgroundImage: 'white',
     }}
     >
       <p style={{position: 'fixed',
