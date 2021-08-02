@@ -11,7 +11,6 @@ import {composeWithDevTools} from 'redux-devtools-extension';
 import {requireAuthorization} from './store/action';
 import {checkAuth, fetchMoviesList, fetchPromo} from './store/api-actions';
 import {AuthorizationStatus} from './const';
-import {redirect} from './store/middlewares/redirect';
 import {PersistGate} from 'redux-persist/integration/react';
 import {persistStore} from 'redux-persist';
 import browserHistory from './browser-history';
@@ -25,7 +24,6 @@ const store = createStore(
   rootReducer,
   composeWithDevTools(
     applyMiddleware(thunk.withExtraArgument(api)),
-    applyMiddleware(redirect),
   ),
 );
 

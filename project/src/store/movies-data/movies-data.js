@@ -4,6 +4,8 @@ import {loadPromo, loadMovies, loadSimilarMovies, loadComments} from '../action'
 const initialState = {
   promo: {},
   movies: [],
+  similarMovies: [],
+  comments: [],
   isDataLoaded: false,
 };
 

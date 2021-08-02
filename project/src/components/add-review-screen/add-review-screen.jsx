@@ -41,7 +41,7 @@ function AddReviewScreen() {
   }
 
   return (
-    <div>
+    <>
       {movies.filter((movie) => movie.id === pickedId).map((movie) => (
         <React.Fragment key={movie.id}>
           <section className="film-card film-card--full" style={{backgroundColor: movie.backgroundColor}}>
@@ -113,7 +113,7 @@ function AddReviewScreen() {
             </div>
           </section>
         </React.Fragment>))}
-    </div>
+    </>
   );
 }
 

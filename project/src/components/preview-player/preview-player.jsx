@@ -20,6 +20,17 @@ function PreviewPlayer({movie, autoPlay, src}) {
   };
 
   useEffect(() => {
+    videoRef.current.onloadeddata = () => setIsLoading(false);
+
+    return () => {
+      if (videoRef.current) {
+        videoRef.current.onloadeddata = null;
+        videoRef.current = null;
+      }
+    };
+  }, [src]);
+
+  useEffect(() => {
     if (isPlaying) {
       const timer = setTimeout(() => {
         videoRef.current.play();

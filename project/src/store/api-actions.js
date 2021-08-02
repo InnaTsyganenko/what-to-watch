@@ -1,4 +1,10 @@
-import {loadPromo, loadMovies, requireAuthorization, logout as closeSession, redirectToRoute, loadSimilarMovies, loadComments} from './action';
+import browserHistory from '../browser-history';
+import {loadPromo,
+  loadMovies,
+  requireAuthorization,
+  logout as closeSession,
+  loadSimilarMovies,
+  loadComments} from './action';
 import {AppRoute, AuthorizationStatus, APIRoute} from '../const';
 import {showAlert} from '../utils';
 
@@ -62,7 +68,7 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
   api.post(APIRoute.LOGIN, {email, password})
     .then(({data}) => localStorage.setItem('token', data.token))
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
-    .then(() => dispatch(redirectToRoute(AppRoute.ROOT)))
+    .then(() => browserHistory.push(AppRoute.ROOT))
 );
 
 export const logout = () => (dispatch, _getState, api) => (
@@ -73,7 +79,7 @@ export const logout = () => (dispatch, _getState, api) => (
 
 export const pushComment = (filmId, rating, comment) => (dispatch, _getState, api) => (
   api.post(`${APIRoute.COMMENTS}${filmId}`, {rating, comment})
-    .then(() => dispatch(redirectToRoute(`${APIRoute.MOVIES}/${filmId}`)))
+    .then(() => browserHistory.push(`${APIRoute.MOVIES}/${filmId}`))
     .catch((err) => {
       showAlert(`Something wrong, please try again :( This is some kind of ${err}...`);
     })

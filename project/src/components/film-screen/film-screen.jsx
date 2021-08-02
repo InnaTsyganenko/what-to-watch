@@ -4,7 +4,7 @@ import Logo from '../logo/logo';
 import UserBlock from '../user-block/user-block';
 import FilmCardButtons from '../film-card-buttons/film-card-buttons';
 import {logoClassName, filmStates} from '../../const';
-import FilmCardTabs from '../film-card-tabs/film-card-tabs';
+import FilmCardNav from '../film-card-nav/film-card-nav';
 import FilmPageOverview from '../film-page-overview/film-page-overview';
 import FilmPageDetails from '../film-page-details/film-page-details';
 import FilmPageReviews from '../film-page-reviews/film-page-reviews';
@@ -38,7 +38,10 @@ function FilmScreen() {
     <div onLoad={onLoadData}>
       {movies.filter((movie) => movie.id === pickedId).map((movie) => (
         <React.Fragment key={movie.id}>
-          <section className="film-card film-card--full" style={{backgroundColor: movie.backgroundColor}}>
+          <section
+            className="film-card film-card--full"
+            style={{backgroundColor: movie.backgroundColor}}
+          >
             <div className="film-card__hero">
               <div className="film-card__bg">
                 <img src={movie.backgroundImage} alt={movie.name} />
@@ -65,7 +68,7 @@ function FilmScreen() {
                   <img src={movie.posterImage} alt={movie.name} width={218} height={327} />
                 </div>
                 <div className="film-card__desc">
-                  <FilmCardTabs state={state} setState={setState} />
+                  <FilmCardNav state={state} setState={setState} />
                   {(state.state === 'Overview' || state.activeItem[filmStates.OVERVIEW]) && <FilmPageOverview movie={movie} />}
                   {(state.activeItem[filmStates.DETAILS]) && <FilmPageDetails movie={movie} />}
                   {(state.activeItem[filmStates.REVIEWS]) && <FilmPageReviews />}

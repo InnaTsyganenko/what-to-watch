@@ -7,9 +7,10 @@ import {
   fetchPromo,
   fetchMoviesList,
   fetchSimilarMoviesList,
-  fetchComments
+  fetchComments,
+  logout
 } from './api-actions';
-import {APIRoute, AppRoute, AuthorizationStatus} from '../const';
+import {APIRoute, AuthorizationStatus} from '../const';
 
 let api = null;
 
@@ -49,16 +50,11 @@ describe('Async operations', () => {
 
     return loginLoader(dispatch, () => {}, api)
       .then(() => {
-        expect(dispatch).toHaveBeenCalledTimes(2);
+        expect(dispatch).toHaveBeenCalledTimes(1);
 
         expect(dispatch).toHaveBeenNthCalledWith(1, {
           type: ActionType.REQUIRED_AUTHORIZATION,
           payload: AuthorizationStatus.AUTH,
-        });
-
-        expect(dispatch).toHaveBeenNthCalledWith(2, {
-          type: ActionType.REDIRECT_TO_ROUTE,
-          payload: AppRoute.ROOT,
         });
       });
   });
@@ -136,6 +132,29 @@ describe('Async operations', () => {
           type: ActionType.LOAD_COMMENTS,
           payload: [{fake: true}],
         });
+      });
+  });
+
+  it('should make a correct API call to DELETE /logout', () => {
+    const apiMock = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const logoutLoader = logout();
+
+    Storage.prototype.removeItem = jest.fn();
+
+    apiMock
+      .onDelete(APIRoute.LOGOUT)
+      .reply(204, [{fake: true}]);
+
+    return logoutLoader(dispatch, jest.fn(() => {}), api)
+      .then(() => {
+        expect(dispatch).toBeCalledTimes(1);
+        expect(dispatch).nthCalledWith(1, {
+          type: ActionType.LOGOUT,
+        });
+
+        expect(Storage.prototype.removeItem).toBeCalledTimes(1);
+        expect(Storage.prototype.removeItem).nthCalledWith(1, 'token');
       });
   });
 });
