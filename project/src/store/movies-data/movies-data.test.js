@@ -39,7 +39,7 @@ const comments = [
 describe('Reducer: moviesData', () => {
   it('without additional parameters should return initial state', () => {
     expect(moviesData(undefined, {}))
-      .toEqual({promo: {}, movies: [], isDataLoaded: false});
+      .toEqual({promo: {}, movies: [], similarMovies: [], comments: [], isDataLoaded: false});
   });
 
   it('should update promo by load promo', () => {

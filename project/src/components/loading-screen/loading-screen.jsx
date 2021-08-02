@@ -5,7 +5,7 @@ function LoadingScreen() {
   return (
     <div style={{height: '100%',
       width: '100%',
-      backgroundImage: 'white',
+      backgroundImage: '#eeeeee',
     }}
     >
       <p style={{position: 'fixed',

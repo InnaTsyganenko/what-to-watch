@@ -20,6 +20,17 @@ function PreviewPlayer({movie, autoPlay, src}) {
   };
 
   useEffect(() => {
+    videoRef.current.onloadeddata = () => setIsLoading(false);
+
+    return () => {
+      if (videoRef.current) {
+        videoRef.current.onloadeddata = null;
+        videoRef.current = null;
+      }
+    };
+  }, [src]);
+
+  useEffect(() => {
     if (isPlaying) {
       const timer = setTimeout(() => {
         videoRef.current.play();
@@ -34,7 +45,6 @@ function PreviewPlayer({movie, autoPlay, src}) {
 
   return (
     <div className="small-film-card__image"
-      data-testid="video-wrapper"
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
     >

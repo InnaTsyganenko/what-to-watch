@@ -10,16 +10,13 @@ import FilmCardButtons from '../film-card-buttons/film-card-buttons';
 import ShowMoreButton from '../show-more-button/show-more-button';
 import {logoClassName} from '../../const';
 import {getPromo} from '../../store/movies-data/selectors';
-import {getGenre, getPickedId} from '../../store/movies-operations/selectors';
-import {AppRoute} from '../../const';
-import browserHistory from '../../browser-history';
+import {getGenre} from '../../store/movies-operations/selectors';
 
 function MainScreen() {
   const location = useLocation();
 
   const promo = useSelector(getPromo);
   const genre = useSelector(getGenre);
-  const pickedId = useSelector(getPickedId);
 
   return (
     <React.Fragment>
@@ -45,7 +42,6 @@ function MainScreen() {
               </p>
               <FilmCardButtons
                 location={location.pathname}
-                onPlayButtonClick={() => browserHistory.push(`${AppRoute.PLAYER}${pickedId}`)}
               />
             </div>
           </div>

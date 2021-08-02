@@ -13,8 +13,6 @@ import Copyright from '../copyright/copyright';
 import {fetchSimilarMoviesList, fetchComments} from '../../store/api-actions';
 import {getMovies} from '../../store/movies-data/selectors';
 import {getPickedId} from '../../store/movies-operations/selectors';
-import {AppRoute} from '../../const';
-import browserHistory from '../../browser-history';
 
 function FilmScreen() {
   const dispatch = useDispatch();
@@ -41,7 +39,6 @@ function FilmScreen() {
       {movies.filter((movie) => movie.id === pickedId).map((movie) => (
         <React.Fragment key={movie.id}>
           <section
-            data-testid="film-card-full"
             className="film-card film-card--full"
             style={{backgroundColor: movie.backgroundColor}}
           >
@@ -61,9 +58,7 @@ function FilmScreen() {
                     <span className="film-card__genre">{movie.genre}</span>
                     <span className="film-card__year">{movie.released}</span>
                   </p>
-                  <FilmCardButtons
-                    onPlayButtonClick={() => browserHistory.push(`${AppRoute.PLAYER}${pickedId}`)}
-                  />
+                  <FilmCardButtons />
                 </div>
               </div>
             </div>

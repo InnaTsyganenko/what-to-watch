@@ -11,8 +11,7 @@ let history;
 let store;
 
 describe('Component: SmallFilmCard', () => {
-  beforeAll(() => {
-    jest.spyOn(console, 'error').mockImplementation(() => {});
+  beforeEach(() => {
     history = createMemoryHistory();
     store = mockStore({});
   });
@@ -22,7 +21,7 @@ describe('Component: SmallFilmCard', () => {
       <Provider store={store}>
         <Router history={history}>
           <SmallFilmCard
-            movie={[]}
+            movie={''}
             autoPlay
             src={''}
           />

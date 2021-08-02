@@ -13,7 +13,6 @@ function SmallFilmCard(props) {
 
   return (
     <article
-      data-testid="article-film-card"
       className="small-film-card catalog__films-card"
       onClick={() => {
         dispatch(getIdMovie(movie.id));

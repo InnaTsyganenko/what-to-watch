@@ -42,6 +42,17 @@ function PlayerScreen({autoPlay}) {
   };
 
   useEffect(() => {
+    videoRef.current.onloadeddata = () => setIsLoading(false);
+
+    return () => {
+      if (videoRef.current) {
+        videoRef.current.onloadeddata = null;
+        videoRef.current = null;
+      }
+    };
+  }, [movie.videoLink]);
+
+  useEffect(() => {
     if (isPlaying) {
       videoRef.current.play();
     } else {
