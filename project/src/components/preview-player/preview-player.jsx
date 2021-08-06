@@ -60,8 +60,8 @@ function PreviewPlayer({movie, autoPlay, src}) {
 
 PreviewPlayer.propTypes = {
   autoPlay: PropTypes.bool.isRequired,
-  src: PropTypes.string.isRequired,
-  movie: PropTypes.object.isRequired,
+  src: PropTypes.string,
+  movie: PropTypes.any.isRequired,
 };
 
 export default PreviewPlayer;
