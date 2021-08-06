@@ -39,3 +39,7 @@ export const APIRoute = {
   COMMENTS: '/comments/',
   SIMILAR: '/similar',
 };
+
+export const LoginStatus = {
+  ERROR: 'ERROR',
+};

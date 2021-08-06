@@ -1,10 +1,17 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {requireAuthorization, logout, getMyList, addMovieInMyList, deleteMovieFromMyList} from '../action';
+import {
+  requireAuthorization,
+  logout,
+  getMyList,
+  addMovieInMyList,
+  deleteMovieFromMyList,
+  getLoginPostErrorMessage} from '../action';
 import {AuthorizationStatus} from '../../const';
 
 const initialState = {
   authorizationStatus: AuthorizationStatus.UNKNOWN,
   myList: [],
+  errorMessage: '',
 };
 
 const user = createReducer(initialState, (builder) => {
@@ -23,6 +30,9 @@ const user = createReducer(initialState, (builder) => {
     })
     .addCase(deleteMovieFromMyList, (state, action) => {
       state.myList = state.myList.filter((el) => el !== action.payload);
+    })
+    .addCase(getLoginPostErrorMessage, (state, action) => {
+      state.errorMessage = action.payload;
     });
 });
 

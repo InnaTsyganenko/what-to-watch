@@ -14,7 +14,7 @@ export const NameSpace = {
 const rootPersistConfig = {
   key: 'root',
   storage,
-  blacklist: ['error', 'MOVIES'],
+  blacklist: ['MOVIES', 'USER'],
 };
 
 const moviesPersistConfig = {
@@ -23,8 +23,14 @@ const moviesPersistConfig = {
   whitelist: ['pickedId'],
 };
 
+const userPersistConfig = {
+  key: 'USER',
+  storage,
+  whitelist: ['authorizationStatus', 'myList'],
+};
+
 const rootReducer = combineReducers({
-  [NameSpace.USER]: user,
+  [NameSpace.USER]: persistReducer(userPersistConfig, user),
   [NameSpace.DATA]: moviesData,
   [NameSpace.MOVIES]: persistReducer(moviesPersistConfig, moviesOperations),
 });

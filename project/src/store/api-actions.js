@@ -4,7 +4,8 @@ import {loadPromo,
   requireAuthorization,
   logout as closeSession,
   loadSimilarMovies,
-  loadComments} from './action';
+  loadComments,
+  getLoginPostErrorMessage} from './action';
 import {AppRoute, AuthorizationStatus, APIRoute} from '../const';
 import {showAlert} from '../utils';
 
@@ -69,6 +70,7 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
     .then(({data}) => localStorage.setItem('token', data.token))
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
     .then(() => browserHistory.push(AppRoute.ROOT))
+    .catch(() => dispatch(getLoginPostErrorMessage('We can’t recognize this email and password combination. Please try again.')))
 );
 
 export const logout = () => (dispatch, _getState, api) => (

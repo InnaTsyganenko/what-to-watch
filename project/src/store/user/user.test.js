@@ -5,7 +5,7 @@ import {AuthorizationStatus} from '../../const';
 describe('Reducer: user', () => {
   it('without additional parameters should return initial state', () => {
     expect(user(undefined, {}))
-      .toEqual({authorizationStatus: AuthorizationStatus.UNKNOWN, myList: []});
+      .toEqual({authorizationStatus: AuthorizationStatus.UNKNOWN, myList: [], errorMessage: ''});
   });
 
   it('should update authorizationStatus to "AUTH"', () => {

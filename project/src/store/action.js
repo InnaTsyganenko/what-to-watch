@@ -17,6 +17,7 @@ export const ActionType = {
   GET_MY_LIST: 'getMyList',
   ADD_MOVIE_IN_MY_LIST: 'addMovieInMyList',
   DELETE_MOVIE_FROM_MY_LIST: 'deleteMovieFromMyList',
+  GET_LOGIN_POST_ERROR_MESSAGE: 'GET_LOGIN_POST_ERROR_MESSAGE',
 };
 
 export const loadPromo = createAction(ActionType.LOAD_PROMO, (promo) => ({
@@ -68,3 +69,7 @@ export const deleteMovieFromMyList = createAction(ActionType.DELETE_MOVIE_FROM_M
 }));
 
 export const logout = createAction(ActionType.LOGOUT);
+
+export const getLoginPostErrorMessage = createAction(ActionType.GET_LOGIN_POST_ERROR_MESSAGE, (message) => ({
+  payload: message,
+}));
