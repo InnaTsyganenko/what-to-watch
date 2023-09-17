@@ -35,7 +35,8 @@ function FilmScreen() {
   };
 
   return (
-    <div onLoad={onLoadData}>
+    <div>
+      <img src="#" onLoad={onLoadData} alt="jhjh">hghg</img>
       {movies.filter((movie) => movie.id === pickedId).map((movie) => (
         <React.Fragment key={movie.id}>
           <section
